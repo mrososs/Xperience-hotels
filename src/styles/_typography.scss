@@ -44,6 +44,21 @@
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--xp-gold-deep);
+
+  // Editorial hairline lead-in. Inline-flex keeps it on the text baseline;
+  // in RTL the ::before naturally moves to the (right) start edge.
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+
+  &::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+    flex: none;
+  }
 }
 
 .xp-lead {
