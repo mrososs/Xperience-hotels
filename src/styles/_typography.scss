@@ -1,0 +1,80 @@
+// =====================================================================
+// TYPOGRAPHY — semantic type roles
+// Playfair Display (serif display) · Plus Jakarta Sans (UI)
+// =====================================================================
+
+.xp-display {
+  font-family: var(--xp-serif);
+  font-weight: 500;
+  font-size: clamp(44px, 6vw, 84px);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  color: var(--xp-ink);
+}
+
+.xp-h1 {
+  font-family: var(--xp-serif);
+  font-weight: 500;
+  font-size: clamp(36px, 4vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--xp-ink);
+}
+
+.xp-h2 {
+  font-family: var(--xp-serif);
+  font-weight: 500;
+  font-size: clamp(28px, 3vw, 38px);
+  line-height: 1.15;
+  color: var(--xp-ink);
+}
+
+.xp-h3 {
+  font-family: var(--xp-serif);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.25;
+  color: var(--xp-ink);
+}
+
+.xp-eyebrow {
+  font-family: var(--xp-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--xp-gold-deep);
+}
+
+.xp-lead {
+  font-family: var(--xp-sans);
+  font-weight: 400;
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.6;
+  color: var(--xp-slate);
+}
+
+.xp-body {
+  font-family: var(--xp-sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--xp-slate);
+}
+
+.xp-small {
+  font-family: var(--xp-sans);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--xp-muted);
+}
+
+.xp-caption {
+  font-family: var(--xp-sans);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  color: var(--xp-muted);
+}

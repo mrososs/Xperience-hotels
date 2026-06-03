@@ -1,0 +1,64 @@
+// =====================================================================
+// PRIMITIVES — buttons, cards, icon sizing
+// =====================================================================
+
+// Lucide icons render as <svg>; normalise their footprint.
+.xp-icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.6;
+  flex: none;
+}
+
+// ---------- BUTTONS ----------
+.xp-btn {
+  font-family: var(--xp-sans);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  border: none;
+  border-radius: var(--xp-r-pill);
+  padding: 14px 28px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition:
+    transform var(--xp-dur-fast) var(--xp-ease),
+    background var(--xp-dur-fast) var(--xp-ease),
+    box-shadow var(--xp-dur-fast) var(--xp-ease),
+    border-color var(--xp-dur-fast) var(--xp-ease),
+    color var(--xp-dur-fast) var(--xp-ease);
+}
+
+.xp-btn--primary {
+  background: var(--xp-gold);
+  color: #2a2310;
+  box-shadow: var(--xp-shadow-gold);
+
+  &:hover { background: var(--xp-gold-deep); color: #fff; transform: translateY(-1px); }
+  &:active { transform: translateY(0) scale(0.985); }
+}
+
+.xp-btn--dark {
+  background: var(--xp-ink);
+  color: var(--xp-cream);
+
+  &:hover { background: #000; transform: translateY(-1px); }
+}
+
+.xp-btn--ghost {
+  background: transparent;
+  color: var(--xp-ink);
+  border: 1px solid var(--xp-line);
+
+  &:hover { border-color: var(--xp-gold); color: var(--xp-gold-deep); }
+}
+
+// ---------- CARD ----------
+.xp-card {
+  background: var(--xp-white);
+  border: 1px solid var(--xp-line);
+  border-radius: var(--xp-r-lg);
+  box-shadow: var(--xp-shadow-sm);
+}

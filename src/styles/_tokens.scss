@@ -1,0 +1,134 @@
+// =====================================================================
+// XPERIENCE HOTELS — Design Tokens
+// Luxury Minimalist · refined neutrals + warm champagne gold
+// Authored as SCSS maps (the single source of truth), then emitted as
+// runtime CSS custom properties on :root so components can theme live.
+// =====================================================================
+
+@use 'sass:map';
+@use 'sass:meta';
+
+// ---------------------------------------------------------------------
+// COLOR — grouped by role. Build-time SCSS values…
+// ---------------------------------------------------------------------
+$color: (
+  // brand neutrals
+  'white':       #ffffff,
+  'cream':       #f7f2ea,  // warm light page background
+  'sand':        #efe6d6,  // panel / muted block
+  'sand-deep':   #e4d8c2,  // pressed sand / dividers on cream
+  'line':        #e6dfd2,  // hairline border on light
+  'line-soft':   #f0eadf,  // faint internal divider
+
+  // ink / slate (high contrast)
+  'ink':         #1c1f22,  // primary text, dark sections
+  'ink-2':       #2a2f34,  // dark panel surface
+  'slate':       #3c434a,  // secondary text on light
+  'muted':       #6e747b,  // tertiary text, captions
+  'muted-2':     #9aa0a6,  // disabled / faint label
+  'on-dark':     #ede7dc,  // body text on charcoal
+  'on-dark-mut': #a7adb2,  // muted text on charcoal
+
+  // warm accent — champagne gold
+  'gold':        #c0a36b,  // primary CTA / highlight
+  'gold-deep':   #9c7b45,  // hover / press / text-on-light gold
+  'gold-soft':   #d8c49a,  // light gold accents, focus rings
+  'gold-tint':   #f4ecdd,  // subtle gold-wash background
+
+  // red sea accent (secondary)
+  'sea':         #1e7a86,  // Red Sea teal — links, sea references
+  'sea-deep':    #123139,  // deep-sea dark surface (about / footer)
+  'sea-tint':    #e8f1f1,  // faint teal wash
+
+  // semantic
+  'success':     #5c7a5c,
+  'error':       #a4564b,
+  'star':        #c0a36b,
+);
+
+// ---------------------------------------------------------------------
+// SPACING — 8pt scale (4 → 128)
+// ---------------------------------------------------------------------
+$space: (
+  1: 4px,  2: 8px,  3: 12px, 4: 16px, 5: 24px,
+  6: 32px, 7: 48px, 8: 64px, 9: 96px, 10: 128px,
+);
+
+// ---------------------------------------------------------------------
+// RADII
+// ---------------------------------------------------------------------
+$radii: (
+  'sm': 8px,    // inputs / chips
+  'md': 12px,   // buttons / small cards
+  'lg': 16px,   // cards
+  'xl': 24px,   // feature panels
+  'pill': 999px,
+);
+
+// ---------------------------------------------------------------------
+// ELEVATION — warm-tinted, low-spread
+// ---------------------------------------------------------------------
+$shadow: (
+  'xs':   0 1px 2px rgba(28, 31, 34, 0.05),
+  'sm':   0 2px 8px rgba(28, 31, 34, 0.06),
+  'md':   0 10px 30px rgba(28, 31, 34, 0.09),
+  'lg':   0 24px 60px rgba(28, 31, 34, 0.13),
+  'gold': 0 10px 28px rgba(156, 123, 69, 0.28),
+);
+
+// ---------------------------------------------------------------------
+// TYPE FAMILIES
+// ---------------------------------------------------------------------
+$serif: ('Playfair Display', 'Times New Roman', serif);
+$sans:  ('Plus Jakarta Sans', system-ui, -apple-system, sans-serif);
+
+// ---------------------------------------------------------------------
+// MOTION
+// ---------------------------------------------------------------------
+$ease:       cubic-bezier(0.22, 0.61, 0.36, 1); // gentle ease-out
+$ease-soft:  cubic-bezier(0.4, 0, 0.2, 1);
+$dur:        0.45s;
+$dur-fast:   0.22s;
+
+// ---------------------------------------------------------------------
+// EMIT — every token above as a `--xp-*` custom property on :root.
+// Keeping CSS vars as the runtime contract means components stay
+// declarative (`var(--xp-gold)`) and remain themeable at runtime.
+// ---------------------------------------------------------------------
+:root {
+  @each $name, $value in $color {
+    --xp-#{$name}: #{$value};
+  }
+  @each $step, $value in $space {
+    --xp-#{$step}: #{$value};
+  }
+  @each $name, $value in $radii {
+    --xp-r-#{$name}: #{$value};
+  }
+  @each $name, $value in $shadow {
+    --xp-shadow-#{$name}: #{$value};
+  }
+
+  // glass — subtle, for floating elements only
+  --xp-glass-bg:      rgba(255, 255, 255, 0.72);
+  --xp-glass-border:  rgba(255, 255, 255, 0.55);
+  --xp-glass-blur:    blur(18px) saturate(120%);
+  --xp-glass-dark-bg: rgba(28, 31, 34, 0.55);
+
+  --xp-serif: #{meta.inspect($serif)};
+  --xp-sans:  #{meta.inspect($sans)};
+
+  --xp-ease:      #{$ease};
+  --xp-ease-soft: #{$ease-soft};
+  --xp-dur:       #{$dur};
+  --xp-dur-fast:  #{$dur-fast};
+}
+
+// ---------------------------------------------------------------------
+// HELPERS — short accessors for use inside other partials / SFCs.
+// e.g. `color: c('gold-deep');`  `padding: sp(6) sp(4);`
+// ---------------------------------------------------------------------
+@function c($name)     { @return map.get($color, $name); }
+@function sp($step)    { @return map.get($space, $step); }
+@function radius($n)   { @return map.get($radii, $n); }
+@function shadow($n)   { @return map.get($shadow, $n); }
