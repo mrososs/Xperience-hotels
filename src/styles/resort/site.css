@@ -112,6 +112,11 @@ html[dir="rtl"] .x-link:hover i{transform:scaleX(-1) translateX(3px)}
 .x-nav.is-stuck .x-navlink{color:var(--xp-slate)}
 .x-nav.is-stuck .x-navlink:hover{color:var(--xp-ink);background:var(--xp-cream)}
 .x-navlink.has-mega[aria-expanded="true"] i{transform:rotate(180deg)}
+/* active route — gold text + a short gold underline, in both nav states */
+.x-navlink.is-active{color:#fff}
+.x-nav.is-stuck .x-navlink.is-active{color:var(--xp-gold-deep)}
+.x-navlink.is-active::after{content:"";position:absolute;left:16px;right:16px;bottom:5px;height:2px;border-radius:2px;background:var(--xp-gold-soft)}
+.x-nav.is-stuck .x-navlink.is-active::after{background:var(--xp-gold)}
 .x-nav__right{display:flex;align-items:center;gap:14px;flex:none}
 
 /* language switcher */

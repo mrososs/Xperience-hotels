@@ -6,8 +6,8 @@
 // self-contained; emits `book` so the host page decides what Book Now does.
 // Strings come from vue-i18n (t); resort names/areas from data (tBi).
 // =====================================================================
-import { nextTick, onMounted, ref, watch } from 'vue'
-import { RouterLink } from 'vue-router'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 import { useLocale } from '@/composables/useLocale'
 import { useScrollState } from '@/composables/useScrollState'
 import { useEventListener } from '@/composables/useEventListener'
@@ -20,6 +20,16 @@ const emit = defineEmits<{ book: [] }>()
 
 const { locale, setLocale, t, tBi } = useLocale()
 const { scrolled } = useScrollState(40)
+
+// Active nav state. Hash anchors share the "/" route (Vue Router ignores the
+// hash when matching), so we resolve active links explicitly rather than via
+// the auto router-link-active class — otherwise Home, Offers and About would
+// all light up together on the landing page.
+const route = useRoute()
+const homeActive = computed(() => route.path === '/' && !route.hash)
+const resortsActive = computed(() => route.path.startsWith('/resorts'))
+const awardsActive = computed(() => route.path === '/awards')
+const sectionActive = (hash: string) => route.path === '/' && route.hash === hash
 
 const megaOpen = ref(false)
 const sheetOpen = ref(false)
@@ -66,10 +76,11 @@ watch(locale, () => nextTick(drawIcons))
         <img class="x-logo-d" :src="logoCharcoal" alt="Xperience Hospitality Management" />
       </RouterLink>
       <nav class="x-nav__links">
-        <RouterLink class="x-navlink" to="/">{{ t('nav.home') }}</RouterLink>
+        <RouterLink class="x-navlink" :class="{ 'is-active': homeActive }" to="/">{{ t('nav.home') }}</RouterLink>
         <button
           ref="triggerRef"
           class="x-navlink has-mega"
+          :class="{ 'is-active': resortsActive }"
           :aria-expanded="megaOpen"
           @click="megaToggle"
           @mouseenter="megaEnter"
@@ -78,9 +89,9 @@ watch(locale, () => nextTick(drawIcons))
           {{ t('nav.resorts') }}
           <i data-lucide="chevron-down"></i>
         </button>
-        <RouterLink class="x-navlink" :to="{ path: '/', hash: '#offers' }">{{ t('nav.offers') }}</RouterLink>
-        <RouterLink class="x-navlink" to="/awards">{{ t('nav.awards') }}</RouterLink>
-        <RouterLink class="x-navlink" :to="{ path: '/', hash: '#about' }">{{ t('nav.about') }}</RouterLink>
+        <RouterLink class="x-navlink" :class="{ 'is-active': sectionActive('#offers') }" :to="{ path: '/', hash: '#offers' }">{{ t('nav.offers') }}</RouterLink>
+        <RouterLink class="x-navlink" :class="{ 'is-active': awardsActive }" to="/awards">{{ t('nav.awards') }}</RouterLink>
+        <RouterLink class="x-navlink" :class="{ 'is-active': sectionActive('#about') }" :to="{ path: '/', hash: '#about' }">{{ t('nav.about') }}</RouterLink>
         <a class="x-navlink" href="#footer">{{ t('nav.contact') }}</a>
       </nav>
       <div class="x-nav__right">
