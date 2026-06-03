@@ -17,7 +17,7 @@ const { selection, openBook, openWithParty, close } = useBookingFlow()
 <template>
   <SiteNavbar @book="openBook()" />
   <main>
-    <HeroSection />
+    <HeroSection @book="openBook" />
     <BookingBar @search="openWithParty" />
     <AwardsMarquee />
     <ResortsSection @book="openBook" />
