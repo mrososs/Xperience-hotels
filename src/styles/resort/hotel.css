@@ -203,6 +203,25 @@ html[dir="rtl"] .h-rev__bars{text-align:right}
   .h-dining{grid-template-columns:1fr}
   .h-gallery__cell--big{grid-column:span 2}
   .h-actlist{grid-template-columns:1fr}
+  /* the hero clears a 160px fixed nav offset that's far too tall on phones */
+  .h-hero{min-height:78vh}
+  .h-hero__inner{padding-top:120px;padding-bottom:48px}
+}
+@media (max-width:480px){
+  /* gallery: keep the 2-up rhythm but shrink rows so cells aren't letterboxed */
+  .h-gallery{grid-auto-rows:130px;gap:10px}
+  /* single-column facilities read better than cramped pairs on narrow widths */
+  .h-facils{grid-template-columns:1fr}
+  .h-facil{padding:16px}
+  /* let the sticky anchor chips breathe a little less so more fit per scroll */
+  .h-anchors__inner{height:54px;gap:4px}
+  .h-anchors a{padding:8px 12px;font-size:13px}
+  /* the schematic map needs less height once it's full-width */
+  .h-map{min-height:300px}
+  .h-acts__media b{font-size:48px}
+  /* room/dining/review cards: trim the generous inner padding */
+  .h-room__body,.h-revcard{padding:20px}
+  .h-dine__body{padding:20px}
 }
 @media (prefers-reduced-motion:reduce){
   .h-hero__media{animation:none;transform:none}

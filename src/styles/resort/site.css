@@ -369,6 +369,10 @@ html[dir="rtl"] .x-modal__close{right:auto;left:18px}
 }
 @media (max-width:680px){
   :root{--x-pad:20px}
+  /* the editorial vertical rhythm is luxurious on desktop but leaves phones
+     feeling empty — pull the section padding and head spacing in */
+  .x-section{padding:clamp(48px,11vw,72px) 0}
+  .x-section__head{margin-bottom:36px}
   /* tighten the floating pill so brand · lang · menu never crowd or overflow */
   .x-nav{top:10px;padding:0 12px}
   .x-nav__bar{height:62px;padding:0 8px 0 16px;gap:8px}
@@ -384,6 +388,11 @@ html[dir="rtl"] .x-modal__close{right:auto;left:18px}
   .x-benefits{grid-template-columns:1fr 1fr}
   .x-fcols{grid-template-columns:1fr}
   .x-footer__top{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  :root{--x-pad:16px}
+  .x-section{padding:44px 0}
+  .x-section__head{margin-bottom:28px}
 }
 @media (prefers-reduced-motion:reduce){
   .x-hero__media{animation:none;transform:none}
