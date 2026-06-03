@@ -26,6 +26,23 @@ a { text-decoration: none; color: inherit; }
 // inline separator dot ( · )
 .xp-dot { color: var(--xp-muted-2); margin: 0 2px; }
 
+// ---------- FOCUS (WCAG 2.2 AA) ----------
+// One visible, branded focus ring for keyboard users. Gold-deep meets the
+// 3:1 indicator contrast on the light canvas; dark surfaces step up to the
+// lighter gold so the ring stays distinguishable.
+:focus-visible {
+  outline: 2px solid var(--xp-gold-deep);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.xpk-hero :focus-visible,
+.xpk-about :focus-visible,
+.xpk-honey__media :focus-visible,
+.xpk-footer :focus-visible,
+.x-band--sea :focus-visible {
+  outline-color: var(--xp-gold-soft);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -17,10 +17,10 @@ function scrollDown() {
     <div class="xpk-hero__media" :style="{ backgroundImage: `url(${HERO_IMG})` }" />
     <div class="xpk-hero__scrim" />
     <div class="xpk-hero__content">
-      <div class="xp-eyebrow xpk-hero__eyebrow">{{ t('hero.eyebrow') }}</div>
-      <h1 class="xpk-hero__title">{{ t('hero.title1') }}<br />{{ t('hero.title2') }}</h1>
-      <p class="xpk-hero__sub">{{ t('hero.sub') }}</p>
-      <div class="xpk-hero__cues">
+      <div class="xp-eyebrow xpk-hero__eyebrow" v-reveal>{{ t('hero.eyebrow') }}</div>
+      <h1 class="xpk-hero__title" v-reveal="1">{{ t('hero.title1') }}<br />{{ t('hero.title2') }}</h1>
+      <p class="xpk-hero__sub" v-reveal="2">{{ t('hero.sub') }}</p>
+      <div class="xpk-hero__cues" v-reveal="3">
         <span><MapPin /> {{ t('hero.cueLocation') }}</span>
         <span class="xpk-dot">·</span>
         <span><Building2 /> {{ t('hero.cueGroup') }}</span>

@@ -21,16 +21,15 @@ const ICONS: Record<string, Component> = {
 <template>
   <section class="xpk-benefits" id="offers">
     <div class="xpk-benefits__inner">
-      <div class="xpk-section__head xpk-benefits__head">
+      <div class="xpk-benefits__head" v-reveal>
         <div class="xp-eyebrow">{{ t('benefits.eyebrow') }}</div>
-        <h2 class="xpk-section__title">{{ t('benefits.title') }}</h2>
+        <h2 class="xpk-benefits__title">{{ t('benefits.title') }}</h2>
       </div>
-      <div class="xpk-benefits__grid">
-        <div v-for="b in BENEFITS" :key="b.label" class="xpk-benefit">
-          <span class="xpk-benefit__icon"><component :is="ICONS[b.icon]" /></span>
-          <span class="xpk-benefit__label">{{ labelOf(b) }}</span>
-        </div>
-      </div>
+      <ul class="xpk-benefits__strip" v-reveal="1">
+        <li v-for="b in BENEFITS" :key="b.label" class="xpk-benefit">
+          <component :is="ICONS[b.icon]" /> <span>{{ labelOf(b) }}</span>
+        </li>
+      </ul>
     </div>
   </section>
 </template>

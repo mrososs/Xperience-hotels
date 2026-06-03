@@ -22,7 +22,7 @@ const track = [...AWARD_MARQUEE, ...AWARD_MARQUEE]
 
 <template>
   <section class="xpk-awards" id="awards">
-    <div class="xpk-awards__head">
+    <div class="xpk-awards__head" v-reveal>
       <div class="xp-eyebrow">{{ t('awardsMarquee.eyebrow') }}</div>
       <h2 class="xpk-awards__title">{{ t('awardsMarquee.title') }}</h2>
       <RouterLink class="xpk-awards__link" :to="AWARDS_URL">

@@ -5,6 +5,36 @@
 
 .xpk-dot { color: var(--xp-muted-2); margin: 0 2px; }
 
+// ---------- REVEAL (v-reveal directive) ----------
+// Hidden start state only applies when JS can animate it back (html.js),
+// so the page degrades to fully visible without scripts.
+html.js .xpk-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.8s var(--xp-ease),
+    transform 0.8s var(--xp-ease);
+  will-change: opacity, transform;
+}
+// Match the hidden rule's specificity (html.js …) so the revealed state wins.
+html.js .xpk-reveal.is-revealed { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .xpk-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+// ---------- EYEBROW — centered variant gets a trailing hairline too ----------
+.xpk-benefits__head .xp-eyebrow::after,
+.xpk-about__eyebrow::after,
+.xpk-awards .xp-eyebrow::after {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+  flex: none;
+}
+
 // ---------- HEADER ----------
 .xpk-header {
   position: fixed;
@@ -306,21 +336,44 @@
   flex-direction: column;
   transition: transform var(--xp-dur) var(--xp-ease), box-shadow var(--xp-dur) var(--xp-ease);
 
-  &__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  &__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.2vw, 34px); }
 
-  &:hover { transform: translateY(-4px); box-shadow: var(--xp-shadow-md); }
-  &:hover &__media { transform: scale(1.04); }
+  &:hover { transform: translateY(-5px); box-shadow: var(--xp-shadow-md); }
+  &:hover &__media { transform: scale(1.045); }
 
   &__media {
-    height: 210px;
+    height: 218px;
     background: #9db9bd center / cover no-repeat;
     position: relative;
-    transition: transform 0.6s var(--xp-ease);
+    overflow: hidden;
+    transition: transform 0.7s var(--xp-ease);
+    // faint base wash so the area chip + numeral stay legible on any photo
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(12, 30, 34, 0.28) 0%, transparent 34%);
+      pointer-events: none;
+    }
+  }
+
+  // Editorial index — quietly tells the "six resorts" story.
+  &__num {
+    position: absolute;
+    top: 12px; right: 16px;
+    z-index: 1;
+    font-family: var(--xp-serif);
+    font-size: 26px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.92);
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.45);
   }
 
   &__area {
     position: absolute;
     top: 14px; left: 14px;
+    z-index: 1;
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -335,7 +388,7 @@
     svg { width: 13px; height: 13px; color: var(--xp-sea); }
   }
 
-  &__body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
+  &__body { padding: 22px 24px 22px; display: flex; flex-direction: column; flex: 1; }
 
   &__name {
     font-family: var(--xp-serif);
@@ -344,7 +397,16 @@
     margin: 0 0 8px;
     color: var(--xp-ink);
     line-height: 1.2;
+    // gold underline that wipes in on card hover
+    align-self: flex-start;
+    background-image: linear-gradient(var(--xp-gold), var(--xp-gold));
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.45s var(--xp-ease);
+    padding-bottom: 2px;
   }
+  &:hover &__name { background-size: 100% 1.5px; }
 
   &__desc { font-size: 14.5px; line-height: 1.6; color: var(--xp-slate); margin: 0 0 18px; flex: 1; }
 
@@ -373,41 +435,72 @@
   &__cta { padding: 10px 22px; font-size: 14px; }
 }
 
-// ---------- BENEFITS ----------
+// RTL: mirror the corner accents and the underline origin.
+html[dir='rtl'] {
+  .xpk-resort__num { right: auto; left: 16px; }
+  .xpk-resort__area { left: auto; right: 14px; }
+  .xpk-resort__name { background-position: 100% 100%; }
+}
+
+// ---------- BENEFITS (editorial feature strip, no card chrome) ----------
 .xpk-benefits {
   background: var(--xp-cream);
 
-  &__inner { max-width: 1280px; margin: 0 auto; padding: var(--xp-8) 40px; }
-  &__head { max-width: none; text-align: center; margin-bottom: var(--xp-6); .xp-eyebrow { display: block; } }
-  &__grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; }
+  &__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(56px, 7vw, 96px) 40px;
+    text-align: center;
+  }
+  &__head { margin-bottom: clamp(30px, 4vw, 52px); }
+  &__title {
+    font-family: var(--xp-serif);
+    font-weight: 500;
+    font-size: clamp(28px, 3.2vw, 44px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--xp-ink);
+    margin: 16px 0 0;
+  }
+
+  // wrapping row of icon + label, separated by thin hairlines
+  &__strip {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px clamp(22px, 3vw, 44px);
+  }
 }
 
 .xpk-benefit {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
-  text-align: center;
-  gap: 14px;
-  padding: 24px 12px;
-  background: #fff;
-  border: 1px solid var(--xp-line);
-  border-radius: var(--xp-r-md);
-  transition: transform var(--xp-dur) var(--xp-ease), box-shadow var(--xp-dur) var(--xp-ease);
-  &:hover { transform: translateY(-3px); box-shadow: var(--xp-shadow-sm); }
+  gap: 12px;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--xp-ink);
+  position: relative;
 
-  &__icon {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    background: var(--xp-gold-tint);
-    color: var(--xp-gold-deep);
-    display: grid;
-    place-items: center;
-    svg { width: 24px; height: 24px; stroke-width: 1.5; }
+  // hairline divider between items (skipped on the last)
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: calc(-1 * clamp(11px, 1.5vw, 22px));
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 20px;
+    background: var(--xp-sand-deep);
   }
 
-  &__label { font-size: 13.5px; font-weight: 600; color: var(--xp-ink); line-height: 1.35; }
+  svg { width: 21px; height: 21px; color: var(--xp-gold-deep); stroke-width: 1.6; flex: none; }
 }
+
+html[dir='rtl'] .xpk-benefit:not(:last-child)::after { right: auto; left: calc(-1 * clamp(11px, 1.5vw, 22px)); }
 
 // ---------- AWARDS MARQUEE ----------
 .xpk-awards {
@@ -415,8 +508,6 @@
   margin: clamp(72px, 9vw, 120px) auto 0;
   padding: 0 40px;
   text-align: center;
-
-  .xp-eyebrow { display: block; }
 
   &__title {
     font-family: var(--xp-serif);
@@ -752,7 +843,6 @@
 @media (max-width: 1000px) {
   .xpk-nav { display: none; }
   .xpk-resort__grid { grid-template-columns: 1fr 1fr; }
-  .xpk-benefits__grid { grid-template-columns: repeat(3, 1fr); }
   .xpk-bookbar { flex-wrap: wrap; }
   .xpk-bookbar__field { flex: 1 1 40%; }
   .xpk-bookbar__go { width: 100%; margin: 8px 0 0; justify-content: center; }
@@ -766,7 +856,9 @@
   .xpk-header__inner { padding: 14px 20px; }
   .xpk-section { padding: var(--xp-8) 20px; }
   .xpk-resort__grid { grid-template-columns: 1fr; }
-  .xpk-benefits__grid { grid-template-columns: 1fr 1fr; }
+  // stack benefits cleanly and drop the dividers when wrapping tightly
+  .xpk-benefits__strip { flex-direction: column; gap: 18px; }
+  .xpk-benefit:not(:last-child)::after { display: none; }
   .xpk-about__stats { gap: 36px; }
   .xpk-footer__cols { grid-template-columns: 1fr; }
 }

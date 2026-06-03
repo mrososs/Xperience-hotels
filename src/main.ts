@@ -7,7 +7,12 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import { vReveal } from './composables/reveal'
 import { i18n, persistLocale, applyHtmlLang, type Locale } from './i18n'
+
+// Mark JS as available so the reveal directive's hidden start state only
+// applies when we can actually animate it back in (no-JS shows everything).
+document.documentElement.classList.add('js')
 
 // Single source of truth for locale side-effects: whatever changes the
 // active locale (the switcher, a future deep link, etc.), persist it and
@@ -26,5 +31,6 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
+app.directive('reveal', vReveal)
 
 app.mount('#app')

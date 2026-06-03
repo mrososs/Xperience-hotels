@@ -11,7 +11,7 @@ const { t } = useLocale()
 
 <template>
   <section class="xpk-section" id="resorts">
-    <div class="xpk-section__head">
+    <div class="xpk-section__head" v-reveal>
       <div class="xp-eyebrow">{{ t('resortsSection.eyebrow') }}</div>
       <h2 class="xpk-section__title">{{ t('resortsSection.title') }}</h2>
       <p class="xpk-section__lead">{{ t('resortsSection.lead') }}</p>
@@ -19,9 +19,11 @@ const { t } = useLocale()
 
     <div class="xpk-resort__grid">
       <ResortCard
-        v-for="resort in RESORTS"
+        v-for="(resort, i) in RESORTS"
         :key="resort.name"
+        v-reveal="i % 3"
         :resort="resort"
+        :index="i"
         @book="$emit('book', $event)"
       />
     </div>
