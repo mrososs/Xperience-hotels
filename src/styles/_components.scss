@@ -637,6 +637,259 @@ html[dir='rtl'] {
 
 html[dir='rtl'] .xpk-benefit:not(:last-child)::after { right: auto; left: calc(-1 * clamp(11px, 1.5vw, 22px)); }
 
+// ---------- DISCOVER (dark band · Shorts-style video reel) ----------
+.xpk-discover {
+  --xpk-rail-pad: 40px;
+  background: var(--xp-ink);
+  color: var(--xp-on-dark);
+  overflow: hidden;
+
+  .xp-eyebrow { color: var(--xp-gold-soft); }
+
+  &__inner { max-width: 1280px; margin: 0 auto; padding: var(--xp-9) var(--xpk-rail-pad); }
+
+  &__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  &__title {
+    font-family: var(--xp-serif);
+    font-weight: 500;
+    font-size: clamp(28px, 3.2vw, 44px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin: 16px 0 0;
+  }
+
+  &__lead { font-size: 16px; line-height: 1.6; color: var(--xp-on-dark-mut); max-width: 52ch; margin: 14px 0 0; }
+
+  &__nav {
+    display: flex;
+    gap: 10px;
+    flex: none;
+
+    button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.25s, transform 0.3s var(--xp-ease);
+
+      &:hover { background: var(--xp-gold); border-color: var(--xp-gold); color: #2a2310; transform: translateY(-2px); }
+      svg { width: 20px; height: 20px; }
+    }
+  }
+
+  // Blossom renders the root as an inline-block scroller; bleed it to the
+  // container padding edges and zero the font so inline-block slides
+  // never gap (the cards restore their own font-size).
+  &__rail {
+    inline-size: calc(100% + 2 * var(--xpk-rail-pad));
+    margin-inline: calc(-1 * var(--xpk-rail-pad));
+    padding-inline: var(--xpk-rail-pad);
+    scroll-padding-inline: var(--xpk-rail-pad);
+    padding-block: 6px 18px;
+    font-size: 0;
+  }
+}
+
+.xpk-vcard {
+  display: inline-block;
+  inline-size: clamp(232px, 22vw, 288px);
+  margin-inline-end: 22px;
+  scroll-snap-align: start;
+  &:last-child { margin-inline-end: 0; }
+
+  // The whole card is one button — reset its chrome and let the layers fill it.
+  &__hit {
+    position: relative;
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 9 / 16;
+    padding: 0;
+    border: 0;
+    border-radius: var(--xp-r-lg);
+    overflow: hidden;
+    background: #0f2024;
+    color: #fff;
+    text-align: start;
+    cursor: pointer;
+    box-shadow: var(--xp-shadow-md);
+    transition: transform 0.5s var(--xp-ease);
+    font-size: 16px; // restore from the rail's font-size: 0
+
+    &:focus-visible { outline: 2px solid var(--xp-gold-soft); outline-offset: 3px; }
+  }
+  &:hover &__hit { transform: translateY(-6px); }
+
+  &__media {
+    position: absolute;
+    inset: 0;
+    background: #0f2024 center / cover no-repeat;
+    transition: transform 0.8s var(--xp-ease);
+  }
+  &:hover &__media { transform: scale(1.07); }
+
+  &__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(8, 18, 20, 0.15) 0%,
+      rgba(8, 18, 20, 0) 32%,
+      rgba(8, 18, 20, 0.5) 68%,
+      rgba(8, 18, 20, 0.92) 100%
+    );
+  }
+
+  &__tag {
+    position: absolute;
+    top: 16px;
+    inset-inline-start: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 6px 12px;
+    border-radius: var(--xp-r-pill);
+    svg { width: 12px; height: 12px; color: var(--xp-gold-soft); }
+  }
+
+  &__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    display: grid;
+    place-items: center;
+    transition: background 0.3s, border-color 0.3s, transform 0.4s var(--xp-ease);
+
+    // slow attention pulse around the play glyph
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      animation: xpk-vpulse 2.6s var(--xp-ease) infinite;
+    }
+
+    svg { width: 24px; height: 24px; color: #fff; fill: #fff; margin-inline-start: 3px; }
+  }
+  &:hover &__play {
+    background: var(--xp-gold);
+    border-color: var(--xp-gold);
+    transform: translate(-50%, -50%) scale(1.08);
+    &::before { border-color: rgba(216, 196, 154, 0.5); }
+    svg { color: #2a2310; fill: #2a2310; }
+  }
+
+  &__body { position: absolute; inset-inline: 0; bottom: 0; padding: 20px; display: block; }
+
+  &__title {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #fff;
+    margin: 0;
+  }
+}
+
+@keyframes xpk-vpulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  70% { transform: scale(1.35); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+// ---------- VIDEO LIGHTBOX (portrait player) ----------
+.xpk-vlb {
+  position: fixed;
+  inset: 0;
+  z-index: 240;
+  background: rgba(8, 18, 20, 0.94);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  animation: xpk-fade 0.3s var(--xp-ease) both;
+
+  &__frame {
+    position: relative;
+    width: min(420px, 92vw);
+    aspect-ratio: 9 / 16;
+    max-height: 88vh;
+    border-radius: var(--xp-r-lg);
+    overflow: hidden;
+    box-shadow: var(--xp-shadow-lg);
+    background: #000;
+    animation: xpk-vlb-pop 0.4s var(--xp-ease) both;
+  }
+
+  &__iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  &__close,
+  &__btn {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.2s;
+    &:hover { background: rgba(255, 255, 255, 0.22); }
+    svg { width: 22px; height: 22px; }
+  }
+
+  &__close { top: 18px; inset-inline-end: 18px; }
+  &__btn { top: 50%; transform: translateY(-50%); }
+  &__btn--prev { left: max(16px, calc(50vw - 320px)); }
+  &__btn--next { right: max(16px, calc(50vw - 320px)); }
+}
+
+@keyframes xpk-vlb-pop { from { transform: scale(0.96); } to { transform: none; } }
+
+@media (max-width: 680px) {
+  .xpk-discover { --xpk-rail-pad: 20px; }
+  .xpk-discover__head { margin-bottom: 28px; }
+}
+
+@media (max-width: 600px) {
+  .xpk-vlb__btn { display: none; } // swipe-to-card + keyboard remain
+}
+
 // ---------- AWARDS MARQUEE ----------
 .xpk-awards {
   max-width: 1280px;

@@ -86,6 +86,19 @@
     "eyebrow": "Book Direct",
     "title": "Book with benefits"
   },
+  "discover": {
+    "eyebrow": "Discover the Xperience",
+    "title": "Life at the resorts, in motion",
+    "lead": "Sun-soaked days, live shows, aqua-park thrills and unforgettable nights — straight from our resorts in Sharm El Sheikh.",
+    "regionLabel": "Resort videos",
+    "prev": "Previous videos",
+    "next": "Next videos",
+    "playVideo": "Play video: {title}",
+    "lightboxLabel": "Video player",
+    "close": "Close video",
+    "prevVideo": "Previous video",
+    "nextVideo": "Next video"
+  },
   "awardsMarquee": {
     "eyebrow": "Awarded & Certified",
     "title": "Recognised across the Red Sea",

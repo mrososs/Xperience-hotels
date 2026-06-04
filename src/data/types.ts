@@ -20,6 +20,16 @@ export interface Benefit {
   labelAr?: string
 }
 
+export interface DiscoverVideo {
+  /** YouTube video id (the part after `watch?v=`). */
+  youtubeId: string
+  /** Short resort tag shown on the card (kept English, like the design). */
+  tag: string
+  title: string
+  /** Arabic translation (rendered when the locale is `ar`). */
+  titleAr?: string
+}
+
 export interface Social {
   name: 'facebook' | 'instagram' | 'youtube' | 'linkedin' | 'twitter'
   href: string

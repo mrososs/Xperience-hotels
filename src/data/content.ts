@@ -2,7 +2,7 @@
 // Types live in ./types. Photography is hotlinked from the brand CDN
 // (per the design-system note); for production, localise into src/assets/.
 
-import type { Benefit, FooterColumn, Resort, Social } from './types'
+import type { Benefit, DiscoverVideo, FooterColumn, Resort, Social } from './types'
 
 export const NAV = ['Home', 'Our Resorts', 'Meetings & Events', 'About Us', 'Contact Us']
 
@@ -84,6 +84,66 @@ export const BENEFITS: Benefit[] = [
   { icon: 'anchor', label: '10% off diving center', labelAr: 'خصم 10% على مركز الغوص' },
   { icon: 'utensils', label: '10% off à la carte', labelAr: 'خصم 10% على المطاعم' },
   { icon: 'clock', label: 'Early check-in · late check-out', labelAr: 'وصول مبكر · مغادرة متأخرة' },
+]
+
+// "Discover the Xperience" — real videos from the brand's YouTube channel
+// (the same set the live site showcases). Thumbnails come from i.ytimg.com,
+// derived from the id in the component.
+export const DISCOVER_VIDEOS: DiscoverVideo[] = [
+  {
+    youtubeId: '_CyrhR3n3B8',
+    tag: 'St. George',
+    title: 'Party Nights, Summer Lights at Xperience St. George',
+    titleAr: 'ليالي السهر وأضواء الصيف في إكسبيريانس سانت جورج',
+  },
+  {
+    youtubeId: 'S-oUoUGvATM',
+    tag: 'Kiroseiz',
+    title: 'Step into your summer mood — 21 water slides at Kiroseiz Aqua Park',
+    titleAr: 'ادخل أجواء صيفك — 21 زحليقة في أكوا بارك كيروسيز',
+  },
+  {
+    youtubeId: 'SO6MJ1ZAtkg',
+    tag: 'Sea Breeze',
+    title: 'Feel the Energy of Summer at Xperience Sea Breeze Resort',
+    titleAr: 'اشعر بطاقة الصيف في منتجع إكسبيريانس سي بريز',
+  },
+  {
+    youtubeId: 'w3B-6iIiQK0',
+    tag: 'Sandy Beach',
+    title: 'Summer Is Calling — Xperience Golden Sandy Beach',
+    titleAr: 'الصيف ينادي — إكسبيريانس جولدن ساندي بيتش',
+  },
+  {
+    youtubeId: 'WQDReDRf6mY',
+    tag: 'Sea Breeze',
+    title: 'Squid Game challenge at Xperience Sea Breeze',
+    titleAr: 'تحدي لعبة الحبار في إكسبيريانس سي بريز',
+  },
+  {
+    youtubeId: '3mDGLn19ubU',
+    tag: 'Kiroseiz',
+    title: 'Show time & incredible hotel entertainment at Kiroseiz',
+    titleAr: 'وقت العرض والترفيه المذهل في كيروسيز',
+  },
+  {
+    youtubeId: 'h57blkUm-WI',
+    tag: 'St. George',
+    title: 'A vibrant preview of our animation activities',
+    titleAr: 'لمحة نابضة من أنشطة الأنيميشن لدينا',
+  },
+  {
+    youtubeId: 'iKi9oilAq-E',
+    tag: 'Kiroseiz',
+    title: 'Easter Celebration — an unforgettable family holiday',
+    titleAr: 'احتفال عيد الفصح — عطلة عائلية لا تُنسى',
+  },
+  {
+    youtubeId: 'c3cFSu9hGCo',
+    tag: 'Kiroseiz',
+    title: 'Kids Show Time — fun for the whole family',
+    titleAr: 'وقت عرض الأطفال — متعة للعائلة كلها',
+  },
 ]
 
 export const HONEYMOON_IMG =

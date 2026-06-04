@@ -5,6 +5,7 @@ import BookingBar from '@/components/landing/BookingBar.vue'
 import AwardsMarquee from '@/components/landing/AwardsMarquee.vue'
 import ResortsSection from '@/components/landing/ResortsSection.vue'
 import BenefitsSection from '@/components/landing/BenefitsSection.vue'
+import DiscoverSection from '@/components/landing/DiscoverSection.vue'
 import AboutSection from '@/components/landing/AboutSection.vue'
 import HoneymoonSection from '@/components/landing/HoneymoonSection.vue'
 import SiteFooter from '@/components/shared/SiteFooter.vue'
@@ -22,6 +23,7 @@ const { selection, openBook, openWithParty, close } = useBookingFlow()
     <AwardsMarquee />
     <ResortsSection @book="openBook" />
     <BenefitsSection />
+    <DiscoverSection />
     <AboutSection />
     <HoneymoonSection @book="openBook()" />
   </main>
