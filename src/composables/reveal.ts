@@ -30,8 +30,10 @@ function getObserver(): IntersectionObserver {
       }
     },
     // Trigger a touch before fully in view so the motion reads as the
-    // content "arriving", not popping in late.
-    { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    // content "arriving", not popping in late. A low threshold keeps tall
+    // blocks (resort grid, video rail) from waiting until 12% of their
+    // height has scrolled in before they start.
+    { threshold: 0.08, rootMargin: '0px 0px -4% 0px' },
   )
   return observer
 }

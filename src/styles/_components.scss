@@ -10,10 +10,10 @@
 // so the page degrades to fully visible without scripts.
 html.js .xpk-reveal {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(18px);
   transition:
-    opacity 0.8s var(--xp-ease),
-    transform 0.8s var(--xp-ease);
+    opacity 0.7s var(--xp-ease),
+    transform 0.7s var(--xp-ease);
   will-change: opacity, transform;
 }
 // Match the hidden rule's specificity (html.js …) so the revealed state wins.
@@ -21,6 +21,16 @@ html.js .xpk-reveal.is-revealed { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html.js .xpk-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+// ---------- ANCHOR TARGETS ----------
+// Landing sections reachable via #hash links (navbar, footer, mega menu).
+// The margin keeps each section's head clear of the fixed navbar on anchor
+// jumps; the router reads it to offset its programmatic scroll the same way
+// (mirrors the resort pages' #overview … #reviews rules in resort/hotel.css).
+#resorts, #offers, #discover, #about, #awards { scroll-margin-top: 104px; }
+@media (max-width: 680px) {
+  #resorts, #offers, #discover, #about, #awards { scroll-margin-top: 88px; }
 }
 
 // ---------- EYEBROW — centered variant gets a trailing hairline too ----------
@@ -442,12 +452,34 @@ html.js .xpk-reveal.is-revealed { opacity: 1; transform: none; }
 }
 
 // ---------- SECTION SHELL ----------
+// Shared responsive rhythm for the landing bands — 96px of air on desktop,
+// easing down instead of snapping at the mobile breakpoint.
 .xpk-section {
   max-width: 1280px;
   margin: 0 auto;
-  padding: var(--xp-9) 40px;
+  padding: clamp(64px, 8vw, 96px) 40px;
 
   &__head { max-width: 640px; margin: 0 0 var(--xp-7); }
+
+  // head variant with an aux item on the trailing edge (count, link…)
+  &__head--row {
+    max-width: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 24px;
+    flex-wrap: wrap;
+    > div { max-width: 640px; }
+  }
+  &__meta {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--xp-muted);
+    padding-bottom: 6px;
+    flex: none;
+  }
   &__title {
     font-family: var(--xp-serif);
     font-weight: 500;
@@ -646,7 +678,7 @@ html[dir='rtl'] .xpk-benefit:not(:last-child)::after { right: auto; left: calc(-
 
   .xp-eyebrow { color: var(--xp-gold-soft); }
 
-  &__inner { max-width: 1280px; margin: 0 auto; padding: var(--xp-9) var(--xpk-rail-pad); }
+  &__inner { max-width: 1280px; margin: 0 auto; padding: clamp(64px, 8vw, 96px) var(--xpk-rail-pad); }
 
   &__head {
     display: flex;
@@ -893,7 +925,7 @@ html[dir='rtl'] .xpk-benefit:not(:last-child)::after { right: auto; left: calc(-
 // ---------- AWARDS MARQUEE ----------
 .xpk-awards {
   max-width: 1280px;
-  margin: clamp(72px, 9vw, 120px) auto 0;
+  margin: clamp(64px, 8vw, 96px) auto 0;
   padding: 0 40px;
   text-align: center;
 
@@ -965,7 +997,7 @@ html[dir='rtl'] .xpk-benefit:not(:last-child)::after { right: auto; left: calc(-
   background: var(--xp-sea-deep);
   color: var(--xp-on-dark);
 
-  &__inner { max-width: 900px; margin: 0 auto; padding: var(--xp-9) 40px; text-align: center; }
+  &__inner { max-width: 900px; margin: 0 auto; padding: clamp(64px, 8vw, 96px) 40px; text-align: center; }
   &__eyebrow { color: var(--xp-gold-soft); margin-bottom: 22px; }
   &__title {
     font-family: var(--xp-serif);
@@ -1006,7 +1038,14 @@ html[dir='rtl'] .xpk-benefit:not(:last-child)::after { right: auto; left: calc(-
   align-items: stretch;
 
   &__media { min-height: 520px; background: #d8c9bd center / cover no-repeat; }
-  &__panel { background: var(--xp-white); padding: var(--xp-8) clamp(40px, 6vw, 90px); }
+  &__panel {
+    background: var(--xp-white);
+    padding: clamp(56px, 7vw, 80px) clamp(40px, 6vw, 90px);
+    // centre the copy against the tall media half
+    display: grid;
+    align-content: center;
+    justify-items: start;
+  }
   &__title {
     font-family: var(--xp-serif);
     font-weight: 500;

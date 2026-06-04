@@ -10,7 +10,7 @@ const { t, tBi } = useLocale()
 
 <template>
   <section class="xpk-honey">
-    <div class="xpk-honey__media" :style="{ backgroundImage: `url(${HONEYMOON_IMG})` }" />
+    <div class="xpk-honey__media" v-reveal :style="{ backgroundImage: `url(${HONEYMOON_IMG})` }" />
     <div class="xpk-honey__panel">
       <div class="xp-eyebrow" v-reveal>{{ t('honeymoon.eyebrow') }}</div>
       <h2 class="xpk-honey__title" v-reveal="1">{{ t('honeymoon.title') }}</h2>

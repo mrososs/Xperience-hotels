@@ -31,7 +31,7 @@ const track = [...AWARD_MARQUEE, ...AWARD_MARQUEE]
     </div>
   </section>
 
-  <RouterLink class="xpk-marquee" :to="AWARDS_URL" aria-label="Awards">
+  <RouterLink class="xpk-marquee" :to="AWARDS_URL" aria-label="Awards" v-reveal="1">
     <div class="xpk-marquee__track">
       <span v-for="(item, i) in track" :key="i" class="xpk-marquee__item">
         <component :is="ICONS[item.icon]" /> {{ tBi(item) }}

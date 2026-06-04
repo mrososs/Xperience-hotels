@@ -6,12 +6,16 @@ const RESORT_SLUGS = new Set(RESORTS.map((r) => r.slug))
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  scrollBehavior(to) {
+  async scrollBehavior(to) {
     // honour in-page #anchors, otherwise scroll to top on navigation
     if (to.hash) {
+      // Wait a frame so cross-page hash navigation (e.g. /about → /#offers)
+      // measures the *rendered* destination — querying synchronously here
+      // runs before the new page mounts and the target doesn't exist yet.
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
       // Offset by the target's CSS scroll-margin-top — the router scrolls
-      // programmatically, so the margin (used to clear sticky bars on the
-      // resort pages) is ignored unless passed as `top` here.
+      // programmatically, so the margin (used to clear the fixed navbar on
+      // the landing and resort pages) is ignored unless passed as `top`.
       const el = document.querySelector<HTMLElement>(to.hash)
       const margin = el ? parseFloat(getComputedStyle(el).scrollMarginTop) || 0 : 0
       return { el: to.hash, top: margin, behavior: 'smooth' }
