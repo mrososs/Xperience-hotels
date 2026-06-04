@@ -1,6 +1,7 @@
 import './styles/main.scss'
 import './styles/resort/site.css'
 import './styles/resort/hotel.css'
+import './styles/resort/about.css'
 
 import { createApp, watch } from 'vue'
 import { createPinia } from 'pinia'

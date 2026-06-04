@@ -291,6 +291,292 @@ export const AWARDS_BY_RESORT: AwardResortGroup[] = [
 // The landing marquee links here; the brand site is the external fallback.
 export const AWARDS_URL = '/awards'
 
+// ---------------------------------------------------------------------
+// ABOUT PAGE (/about) — who we are, sustainability, achievements,
+// policies and reports. Copy mirrors the design bundle's About page;
+// UI strings live in the i18n catalogs (aboutPage.*), entity content here.
+// ---------------------------------------------------------------------
+export const ABOUT_HERO_IMG =
+  'https://xperience-hotels.com/wp-content/uploads/2022/10/banner-Xperience-Sea-Breeze-Resort-1.jpg'
+
+export const ABOUT_WHO_IMG = HERO_IMG
+
+// Kiroseiz Group companies (chips). Brand names — not translated.
+export const KIROSEIZ_COMPANIES: { icon: string; label: string }[] = [
+  { icon: 'building-2', label: 'Kiroseiz Contracting & Development' },
+  { icon: 'building-2', label: 'Kiroseiz Trading & Contracting' },
+  { icon: 'hotel', label: 'Kiroseiz Hotels Establishment' },
+  { icon: 'compass', label: 'Kiroseiz Tours' },
+  { icon: 'waves', label: 'Kiroseiz Red Sea' },
+  { icon: 'hammer', label: 'Kiroseiz Touristic Construction' },
+]
+
+export interface AboutStat {
+  count: number
+  suffix?: string
+  label: { en: string; ar: string }
+}
+
+export const ABOUT_STATS: AboutStat[] = [
+  { count: 2011, label: { en: 'Founded', ar: 'سنة التأسيس' } },
+  { count: 6, label: { en: 'Red Sea resorts', ar: 'منتجعات' } },
+  { count: 30, suffix: '+', label: { en: 'Years of expertise', ar: 'عامًا من الخبرة' } },
+  { count: 6, label: { en: 'Group companies', ar: 'شركات بالمجموعة' } },
+]
+
+export interface AboutPillar {
+  icon: string
+  title: { en: string; ar: string }
+  desc: { en: string; ar: string }
+}
+
+export const ABOUT_PILLARS: AboutPillar[] = [
+  {
+    icon: 'clipboard-check',
+    title: { en: 'Waste Audits', ar: 'تدقيق النفايات' },
+    desc: {
+      en: 'Conducted 4 times a year over 5-day periods, with results shared across departments.',
+      ar: 'يُجرى 4 مرات سنويًا على مدى 5 أيام، وتُشارك النتائج بين الأقسام.',
+    },
+  },
+  {
+    icon: 'recycle',
+    title: { en: 'Recycling', ar: 'إعادة التدوير' },
+    desc: {
+      en: 'Paper, plastic, glass, cans, cardboard and food composting via the Sharm El Sheikh program.',
+      ar: 'ورق وبلاستيك وزجاج وعلب وكرتون وتسميد الطعام عبر برنامج شرم الشيخ.',
+    },
+  },
+  {
+    icon: 'droplets',
+    title: { en: 'In Guest Room', ar: 'داخل الغرف' },
+    desc: {
+      en: 'Low-flow taps, a linen & towel reuse program and energy-efficient lighting.',
+      ar: 'صنابير موفّرة للمياه وبرنامج لإعادة استخدام المناشف وإضاءة موفّرة للطاقة.',
+    },
+  },
+  {
+    icon: 'leaf',
+    title: { en: 'Eco Purchasing', ar: 'شراء مستدام' },
+    desc: {
+      en: 'Recycled-content supplies and LED lighting throughout every property.',
+      ar: 'مستلزمات بمحتوى معاد تدويره وإضاءة LED في كل المنشآت.',
+    },
+  },
+  {
+    icon: 'mail',
+    title: { en: 'Inter-Office', ar: 'المكاتب الداخلية' },
+    desc: {
+      en: 'Digital-first communication and double-sided or reused paper when printing is needed.',
+      ar: 'تواصل رقمي أولًا وطباعة على الوجهين أو ورق معاد استخدامه عند الحاجة.',
+    },
+  },
+]
+
+export interface AboutResult {
+  count: number
+  unit?: string
+  label: { en: string; ar: string }
+  sub: { en: string; ar: string }
+}
+
+export const ABOUT_RESULTS: AboutResult[] = [
+  {
+    count: 7,
+    unit: '%',
+    label: { en: 'Less electricity used', ar: 'انخفاض استهلاك الكهرباء' },
+    sub: { en: 'Energy-efficient bulbs & dimmers', ar: 'لمبات موفّرة ومنظّمات إضاءة' },
+  },
+  {
+    count: 22,
+    unit: '%',
+    label: { en: 'Less gas consumed', ar: 'انخفاض استهلاك الغاز' },
+    sub: { en: 'Optimised operations', ar: 'تشغيل محسّن' },
+  },
+  {
+    count: 5,
+    unit: '%',
+    label: { en: 'Less steam used', ar: 'انخفاض استهلاك البخار' },
+    sub: { en: 'Preventive maintenance', ar: 'صيانة وقائية' },
+  },
+  {
+    count: 2016,
+    label: { en: 'Composting started', ar: 'بدء التسميد' },
+    sub: { en: 'Toward a near-zero-waste property', ar: 'نحو منشأة شبه خالية من النفايات' },
+  },
+]
+
+export interface AboutPolicy {
+  icon: string
+  title: { en: string; ar: string }
+  intro: { en: string; ar: string }
+  points: { en: string; ar: string }[]
+}
+
+export const ABOUT_POLICIES: AboutPolicy[] = [
+  {
+    icon: 'globe',
+    title: { en: 'Environmental Policy', ar: 'السياسة البيئية' },
+    intro: {
+      en: "We're committed to reducing our operational impact to protect the environment for future generations.",
+      ar: 'نلتزم بتقليل أثر عملياتنا لحماية البيئة للأجيال القادمة.',
+    },
+    points: [
+      {
+        en: 'Reduce electricity, gas and water use per guest, per night.',
+        ar: 'تقليل استهلاك الكهرباء والغاز والمياه لكل ضيف في الليلة.',
+      },
+      {
+        en: 'Reduce the amount of waste produced and comply with all environmental laws.',
+        ar: 'تقليل النفايات والالتزام بكل القوانين البيئية.',
+      },
+      {
+        en: 'Monitor and report performance, and involve staff and guests in our goals.',
+        ar: 'متابعة الأداء والإبلاغ عنه وإشراك الموظفين والنزلاء في أهدافنا.',
+      },
+    ],
+  },
+  {
+    icon: 'badge-check',
+    title: { en: 'Quality Assurance', ar: 'ضمان الجودة' },
+    intro: {
+      en: 'Quality matters because we value our guests. We aim to meet and exceed expectations through continuous improvement.',
+      ar: 'الجودة تهمّنا لأننا نقدّر نزلاءنا. نسعى لتلبية التوقعات وتجاوزها عبر التحسين المستمر.',
+    },
+    points: [
+      {
+        en: 'Regular gathering and monitoring of guest feedback.',
+        ar: 'جمع ومتابعة آراء النزلاء بانتظام.',
+      },
+      {
+        en: 'Clear complaints procedures and measurable quality objectives.',
+        ar: 'إجراءات واضحة للشكاوى وأهداف جودة قابلة للقياس.',
+      },
+      {
+        en: 'Ongoing training and development for all employees.',
+        ar: 'تدريب وتطوير مستمر لكل الموظفين.',
+      },
+    ],
+  },
+  {
+    icon: 'shield',
+    title: { en: 'Children Protection', ar: 'حماية الأطفال' },
+    intro: {
+      en: 'Xperience Hotels are committed to protecting children — their welfare is never at risk.',
+      ar: 'تلتزم فنادق إكسبيريانس بحماية الأطفال — سلامتهم لا تتعرض للخطر أبدًا.',
+    },
+    points: [
+      {
+        en: 'Value, respect and listen to children.',
+        ar: 'تقدير الأطفال واحترامهم والإنصات إليهم.',
+      },
+      {
+        en: 'Maintain strong protection systems and staff training.',
+        ar: 'أنظمة حماية قوية وتدريب للموظفين.',
+      },
+      {
+        en: 'Never hire staff under 18, and protect children from all forms of harm.',
+        ar: 'عدم تعيين من هم دون 18 عامًا وحماية الأطفال من كل أشكال الأذى.',
+      },
+    ],
+  },
+  {
+    icon: 'users',
+    title: { en: 'Local Community', ar: 'المجتمع المحلي' },
+    intro: {
+      en: 'We integrate our hotels and staff into the local community and seek to be an active member.',
+      ar: 'ندمج فنادقنا وموظفينا في المجتمع المحلي ونسعى لأن نكون عضوًا فاعلًا.',
+    },
+    points: [
+      {
+        en: 'Respect and promote local culture, religion and traditions.',
+        ar: 'احترام وتعزيز الثقافة والدين والتقاليد المحلية.',
+      },
+      {
+        en: 'Buy from local suppliers and promote local crafts.',
+        ar: 'الشراء من المورّدين المحليين وترويج الحرف المحلية.',
+      },
+      {
+        en: 'Support schools and hospitals through donations.',
+        ar: 'دعم المدارس والمستشفيات عبر التبرعات.',
+      },
+    ],
+  },
+  {
+    icon: 'handshake',
+    title: { en: 'Labor Policy', ar: 'سياسة العمل' },
+    intro: {
+      en: "We're committed to treating our employees fairly and lawfully.",
+      ar: 'نلتزم بمعاملة موظفينا بعدل ووفقًا للقانون.',
+    },
+    points: [
+      {
+        en: 'Written contracts and a fair living wage for all employees.',
+        ar: 'عقود مكتوبة وأجر عادل لكل الموظفين.',
+      },
+      {
+        en: 'Working hours that comply with national and international law.',
+        ar: 'ساعات عمل تتوافق مع القانون المحلي والدولي.',
+      },
+      {
+        en: 'No discrimination of any kind; freedom to join a trade union.',
+        ar: 'لا تمييز من أي نوع، وحرية الانضمام للنقابات.',
+      },
+    ],
+  },
+  {
+    icon: 'heart-pulse',
+    title: { en: 'Health & Safety', ar: 'الصحة والسلامة' },
+    intro: {
+      en: "We're committed to the health and safety of our guests and staff alike.",
+      ar: 'نلتزم بصحة وسلامة نزلائنا وموظفينا على حدٍّ سواء.',
+    },
+    points: [
+      {
+        en: 'Comply with all health & safety legislation and standards.',
+        ar: 'الالتزام بكل تشريعات ومعايير الصحة والسلامة.',
+      },
+      {
+        en: 'Training in firefighting, evacuation, first aid and hazard spotting.',
+        ar: 'تدريب على الإطفاء والإخلاء والإسعافات الأولية ورصد المخاطر.',
+      },
+      {
+        en: 'A resident doctor on-site and medical care for all employees.',
+        ar: 'طبيب مقيم بالموقع ورعاية طبية لكل الموظفين.',
+      },
+    ],
+  },
+]
+
+export interface AboutReport {
+  title: { en: string; ar: string }
+  href: string
+}
+
+export const ABOUT_REPORTS: AboutReport[] = [
+  {
+    title: {
+      en: 'Sustainable Development Report 2024–2025',
+      ar: 'تقرير التنمية المستدامة 2024–2025',
+    },
+    href: 'https://xperience-hotels.com/wp-content/uploads/2025/08/sustainability-development-report-2024-2025.pdf',
+  },
+  {
+    title: {
+      en: 'Sustainability — Xperience St. George',
+      ar: 'الاستدامة — إكسبيريانس سانت جورج',
+    },
+    href: 'https://xperience-hotels.com/wp-content/uploads/2026/04/Sustainability-Xperience-St.-George.pdf',
+  },
+  {
+    title: {
+      en: 'Xperience Resorts Sustainability Policies',
+      ar: 'سياسات الاستدامة لمنتجعات إكسبيريانس',
+    },
+    href: 'https://xperience-hotels.com/wp-content/uploads/2025/08/xperience-resorts-sustainability-policies.pdf',
+  },
+]
+
 export const SOCIAL: Social[] = [
   { name: 'facebook', href: 'https://www.facebook.com/pages/Xperience-Egypt/183528368351249' },
   { name: 'instagram', href: 'https://www.instagram.com/xperienceegypt/' },

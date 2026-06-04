@@ -1,0 +1,83 @@
+/* ===========================================================
+   XPERIENCE — About page styles (ab-*)
+   Loaded after site.css + hotel.css. Reuses x-* tokens.
+   =========================================================== */
+
+/* breadcrumb on page hero */
+.ab-crumb{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.8);margin-bottom:18px}
+.ab-crumb a:hover{color:var(--xp-gold-soft)}
+.ab-crumb i{width:14px;height:14px;opacity:.7}
+html[dir="rtl"] .ab-crumb i{transform:scaleX(-1)}
+
+/* who-we-are intro split */
+.ab-who{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(40px,6vw,84px);align-items:center}
+.ab-who__media{position:relative;border-radius:var(--xp-r-xl);overflow:hidden;aspect-ratio:5/6;background:#cdd9d9 center/cover no-repeat}
+.ab-who__tag{position:absolute;left:22px;bottom:22px;right:22px;display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--xp-r-md);background:rgba(255,255,255,.92);backdrop-filter:blur(10px);box-shadow:var(--xp-shadow-md)}
+html[dir="rtl"] .ab-who__tag{left:22px;right:22px}
+.ab-who__tag b{font-family:var(--xp-serif);font-size:34px;font-weight:600;color:var(--xp-gold-deep);line-height:1}
+.ab-who__tag span{font-size:13px;color:var(--xp-slate);line-height:1.4}
+
+/* group companies chips */
+.ab-group{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.ab-group span{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;color:var(--xp-slate);background:#fff;border:1px solid var(--xp-line);border-radius:var(--xp-r-pill);padding:9px 16px}
+.ab-group span i{width:14px;height:14px;color:var(--xp-gold-deep)}
+
+/* sustainability pillar cards */
+.ab-pillars{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.ab-pillar{display:flex;flex-direction:column;gap:14px;padding:26px 22px;background:#fff;border:1px solid var(--xp-line);border-radius:var(--xp-r-md);transition:transform .4s var(--x-rise),box-shadow .4s,border-color .4s}
+.ab-pillar:hover{transform:translateY(-5px);box-shadow:var(--xp-shadow-md);border-color:var(--xp-gold-soft)}
+.ab-pillar__ic{width:52px;height:52px;border-radius:14px;background:var(--xp-sea-tint);color:var(--xp-sea-deep);display:grid;place-items:center}
+.ab-pillar__ic i{width:24px;height:24px;stroke-width:1.5}
+.ab-pillar b{font-size:15px;font-weight:600;color:var(--xp-ink);line-height:1.3}
+.ab-pillar p{font-size:13px;line-height:1.55;color:var(--xp-muted);margin:0}
+
+/* achievements (dark band) — big animated stats */
+.ab-results{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:8px}
+.ab-result{padding:30px;border-radius:var(--xp-r-lg);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
+.ab-result__n{display:flex;align-items:baseline;gap:4px;font-family:var(--xp-serif);font-size:clamp(40px,4.4vw,60px);font-weight:600;color:var(--xp-gold-soft);line-height:1}
+.ab-result__n em{font-style:normal;font-size:.4em;font-family:var(--xp-sans);color:var(--xp-on-dark-mut);font-weight:600}
+.ab-result__lbl{margin-top:12px;font-size:14px;line-height:1.45;color:var(--xp-on-dark)}
+.ab-result__sub{margin-top:6px;font-size:12px;color:var(--xp-on-dark-mut)}
+
+/* policy accordion */
+.ab-acc{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;align-items:start}
+.ab-item{border:1px solid var(--xp-line);border-radius:var(--xp-r-md);background:#fff;overflow:hidden;transition:box-shadow .3s,border-color .3s;height:max-content}
+.ab-item.is-open{box-shadow:var(--xp-shadow-sm);border-color:var(--xp-gold-soft)}
+.ab-item__btn{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:none;border:none;padding:22px 24px;cursor:pointer;font-family:inherit}
+html[dir="rtl"] .ab-item__btn{text-align:right}
+.ab-item__ic{width:42px;height:42px;border-radius:50%;background:var(--xp-gold-tint);color:var(--xp-gold-deep);display:grid;place-items:center;flex:none;transition:background .3s,color .3s}
+.ab-item.is-open .ab-item__ic{background:var(--xp-gold);color:#2A2310}
+.ab-item__ic i{width:20px;height:20px}
+.ab-item__t{flex:1;font-size:16px;font-weight:600;color:var(--xp-ink)}
+.ab-item__chev{width:20px;height:20px;color:var(--xp-muted);transition:transform .35s var(--x-rise);flex:none}
+.ab-item.is-open .ab-item__chev{transform:rotate(180deg)}
+.ab-item__panel{max-height:0;overflow:hidden;transition:max-height .45s var(--x-rise)}
+.ab-item__inner{padding:0 24px 24px 80px}
+html[dir="rtl"] .ab-item__inner{padding:0 80px 24px 24px}
+.ab-item__inner p{font-size:14px;line-height:1.6;color:var(--xp-slate);margin:0 0 14px}
+.ab-item__inner ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.ab-item__inner li{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;color:var(--xp-slate)}
+.ab-item__inner li i{width:16px;height:16px;color:var(--xp-gold-deep);margin-top:2px;flex:none}
+
+/* report download cards */
+.ab-reports{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ab-report{display:flex;flex-direction:column;gap:16px;padding:28px;background:#fff;border:1px solid var(--xp-line);border-radius:var(--xp-r-lg);box-shadow:var(--xp-shadow-xs);transition:transform .4s var(--x-rise),box-shadow .4s}
+.ab-report:hover{transform:translateY(-4px);box-shadow:var(--xp-shadow-md)}
+.ab-report__ic{width:50px;height:50px;border-radius:14px;background:var(--xp-sea-tint);color:var(--xp-sea-deep);display:grid;place-items:center}
+.ab-report__ic i{width:24px;height:24px;stroke-width:1.5}
+.ab-report b{font-size:16px;font-weight:600;color:var(--xp-ink);line-height:1.35;flex:1}
+.ab-report .x-link{color:var(--xp-sea)}
+
+@media (max-width:1080px){
+  .ab-who{grid-template-columns:1fr;gap:36px}
+  .ab-pillars{grid-template-columns:repeat(3,1fr)}
+  .ab-results{grid-template-columns:1fr 1fr}
+  .ab-acc{grid-template-columns:1fr}
+  .ab-reports{grid-template-columns:1fr}
+}
+@media (max-width:680px){
+  .ab-pillars{grid-template-columns:1fr 1fr}
+  .ab-results{grid-template-columns:1fr 1fr}
+  .ab-item__inner{padding:0 24px 24px 24px}
+  html[dir="rtl"] .ab-item__inner{padding:0 24px 24px 24px}
+}
