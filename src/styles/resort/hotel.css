@@ -46,7 +46,11 @@ html[dir="rtl"] .h-hero__name{font-family:var(--x-ar-serif)}
 .h-fact i{width:16px;height:16px;color:var(--xp-gold-soft)}
 
 /* ---------- STICKY ANCHOR NAV ---------- */
-.h-anchors{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.9);backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);border-bottom:1px solid var(--xp-line)}
+/* Stick below the floating nav pill (18px offset + 76px bar + 10px gap) —
+   at top:0 the chips landed underneath it and couldn't be tapped. */
+.h-anchors{position:sticky;top:104px;z-index:90;background:rgba(255,255,255,.9);backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);border-bottom:1px solid var(--xp-line)}
+/* anchor targets: clear the nav pill + sticky chip bar when jumping */
+#overview,#gallery,#rooms,#dining,#activities,#facilities,#location,#reviews{scroll-margin-top:176px}
 .h-anchors__inner{display:flex;align-items:center;gap:6px;height:60px;overflow-x:auto;scrollbar-width:none}
 .h-anchors__inner::-webkit-scrollbar{display:none}
 .h-anchors a{padding:9px 16px;border-radius:var(--xp-r-pill);font-size:14px;font-weight:500;color:var(--xp-slate);white-space:nowrap;transition:background .2s,color .2s}
@@ -206,6 +210,9 @@ html[dir="rtl"] .h-rev__bars{text-align:right}
   /* the hero clears a 160px fixed nav offset that's far too tall on phones */
   .h-hero{min-height:78vh}
   .h-hero__inner{padding-top:120px;padding-bottom:48px}
+  /* the nav pill is shorter on phones (10px offset + 62px bar + 8px gap) */
+  .h-anchors{top:80px}
+  #overview,#gallery,#rooms,#dining,#activities,#facilities,#location,#reviews{scroll-margin-top:150px}
 }
 @media (max-width:480px){
   /* gallery: keep the 2-up rhythm but shrink rows so cells aren't letterboxed */

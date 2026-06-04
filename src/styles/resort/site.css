@@ -62,7 +62,10 @@ html[lang="ar"] .x-lang-en{display:none!important}
    LAYOUT
    =========================================================== */
 .x-wrap{max-width:var(--x-maxw);margin:0 auto;padding-left:var(--x-pad);padding-right:var(--x-pad)}
-.x-section{padding:clamp(72px,9vw,140px) 0}
+/* padding-block only — the shorthand's `… 0` was zeroing .x-wrap's
+   horizontal padding on `class="x-section x-wrap"` elements (source
+   order), leaving section content flush with the viewport edge. */
+.x-section{padding-block:clamp(72px,9vw,140px)}
 .x-section__head{max-width:680px;margin:0 0 56px}
 .x-section__head.is-center{margin-left:auto;margin-right:auto;text-align:center}
 .x-section__title{margin:16px 0 0}
@@ -371,7 +374,7 @@ html[dir="rtl"] .x-modal__close{right:auto;left:18px}
   :root{--x-pad:20px}
   /* the editorial vertical rhythm is luxurious on desktop but leaves phones
      feeling empty — pull the section padding and head spacing in */
-  .x-section{padding:clamp(48px,11vw,72px) 0}
+  .x-section{padding-block:clamp(48px,11vw,72px)}
   .x-section__head{margin-bottom:36px}
   /* tighten the floating pill so brand · lang · menu never crowd or overflow */
   .x-nav{top:10px;padding:0 12px}
@@ -381,8 +384,15 @@ html[dir="rtl"] .x-modal__close{right:auto;left:18px}
   /* Book Now is one tap away in the mobile sheet — drop it from the bar */
   .x-nav__right > .x-btn{display:none}
   .x-lang button{padding:6px 10px}
-  .x-book{flex-wrap:wrap}
-  .x-book__field{flex:1 1 45%;border-right:none}
+  .x-book{flex-wrap:wrap;position:relative}
+  .x-book__field{flex:1 1 45%;border-right:none;position:static}
+  html[dir="rtl"] .x-book__field{border-left:none}
+  /* Anchor popovers to the booking bar, not the (half-width) field: the
+     260px panel hangs past the viewport otherwise, which silently widens
+     the mobile layout viewport and shifts the whole page off-screen —
+     even while hidden, since visibility:hidden still takes layout space. */
+  .x-pop{left:10px;right:10px;min-width:0}
+  html[dir="rtl"] .x-pop{left:10px;right:10px}
   .x-book__go{width:100%;margin:8px 0 0}
   .x-rcard--third{grid-column:span 12}
   .x-benefits{grid-template-columns:1fr 1fr}
@@ -391,7 +401,7 @@ html[dir="rtl"] .x-modal__close{right:auto;left:18px}
 }
 @media (max-width:480px){
   :root{--x-pad:16px}
-  .x-section{padding:44px 0}
+  .x-section{padding-block:44px}
   .x-section__head{margin-bottom:28px}
 }
 @media (prefers-reduced-motion:reduce){

@@ -381,7 +381,9 @@ function initSpy(cleanups: Cleanup[]): void {
   })
   const ids = Object.keys(map)
   const onScroll = () => {
-    const pos = window.scrollY + 140
+    // Probe just past the sections' scroll-margin-top (150–176px), so the
+    // section an anchor jump lands on is the one that lights up.
+    const pos = window.scrollY + 190
     let current = ids[0] ?? ''
     ids.forEach((id) => {
       const sec = document.getElementById(id)
