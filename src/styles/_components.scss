@@ -1307,5 +1307,25 @@ html[dir='rtl'] .xpk-benefit:not(:last-child)::after { right: auto; left: calc(-
   }
   .xpk-herocar__controls { inset-block-end: 64px; padding-inline: 20px; }
   .xpk-herocar__play { display: none; } // keep the touch control set lean
-  .xpk-herocar__progress { gap: 14px; }
+  // Shrink the whole control strip so counter + 6 dots + both arrows fit
+  // inside a 360–390px viewport without clipping the trailing arrow.
+  .xpk-herocar__progress { gap: 12px; }
+  .xpk-herocar__dots { gap: 6px; }
+  .xpk-herocar__dot { inline-size: 16px; }
+  .xpk-herocar__dot.is-on { inline-size: 28px; }
+  .xpk-herocar__arrows { gap: 10px; }
+  .xpk-herocar__arrow {
+    inline-size: 40px;
+    block-size: 40px;
+    svg { width: 18px; height: 18px; }
+  }
+  // Let the section-head aux label (resort count line) shrink and wrap
+  // instead of running past the viewport edge.
+  .xpk-section__meta { flex: 0 1 auto; }
+}
+
+// On the narrowest phones the numeric counter is the least useful piece
+// of hero chrome — drop it so the dots and arrows keep their tap sizes.
+@media (max-width: 370px) {
+  .xpk-herocar__count { display: none; }
 }
