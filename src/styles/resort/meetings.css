@@ -1,0 +1,117 @@
+/* ===========================================================
+   XPERIENCE — Meetings & Events page styles (m-*)
+   Loaded after site.css + hotel.css; reuses x-* / h-* tokens.
+   =========================================================== */
+
+/* sticky-anchor offsets for this page's sections (mirrors hotel.css) */
+#ballroom,#venues,#capacity,#weddings,#services,#enquire{scroll-margin-top:176px}
+
+/* ---------- BREADCRUMB (on hero) ---------- */
+.m-crumb{display:flex;align-items:center;gap:9px;font-size:13px;color:rgba(255,255,255,.78);margin-bottom:20px;flex-wrap:wrap}
+.m-crumb a{color:rgba(255,255,255,.78);transition:color .2s}
+.m-crumb a:hover{color:#fff}
+.m-crumb i{width:14px;height:14px;opacity:.6}
+html[dir="rtl"] .m-crumb i{transform:scaleX(-1)}
+.m-crumb b{color:var(--xp-gold-soft);font-weight:600}
+
+/* ---------- BALLROOM SPLIT FEATURE ---------- */
+.m-ball{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;border-radius:var(--xp-r-xl);overflow:hidden;box-shadow:var(--xp-shadow-md);border:1px solid var(--xp-line)}
+.m-ball__media{position:relative;min-height:480px;background:#9db9bd center/cover no-repeat}
+.m-ball__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,24,28,0) 55%,rgba(8,24,28,.5) 100%)}
+.m-ball__tag{position:absolute;left:24px;bottom:24px;z-index:1;display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.16);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.24);padding:8px 14px;border-radius:var(--xp-r-pill)}
+html[dir="rtl"] .m-ball__tag{left:auto;right:24px}
+.m-ball__tag i{width:14px;height:14px;color:var(--xp-gold-soft)}
+.m-ball__panel{background:#fff;padding:clamp(34px,4vw,56px);display:flex;flex-direction:column;justify-content:center}
+.m-specs{display:grid;grid-template-columns:1fr 1fr;gap:20px 28px;margin:28px 0 32px}
+.m-spec{display:flex;gap:13px;align-items:flex-start}
+.m-spec i{width:22px;height:22px;color:var(--xp-gold-deep);flex:none;stroke-width:1.5;margin-top:2px}
+.m-spec b{display:block;font-family:var(--xp-serif);font-size:24px;font-weight:600;color:var(--xp-ink);line-height:1}
+.m-spec span{font-size:13px;color:var(--xp-muted);margin-top:4px;display:block}
+
+/* ---------- CAPACITY: setup cards + table ---------- */
+.m-cap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,4vw,56px);align-items:start}
+.m-setups{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.m-setup{background:#fff;border:1px solid var(--xp-line);border-radius:var(--xp-r-lg);padding:26px 24px;box-shadow:var(--xp-shadow-xs);transition:transform .4s var(--x-rise),box-shadow .4s,border-color .4s}
+.m-setup:hover{transform:translateY(-4px);box-shadow:var(--xp-shadow-md);border-color:var(--xp-gold-soft)}
+.m-setup__ic{width:52px;height:52px;border-radius:var(--xp-r-md);background:var(--xp-gold-tint);color:var(--xp-gold-deep);display:grid;place-items:center;margin-bottom:18px}
+.m-setup__ic i{width:24px;height:24px;stroke-width:1.5}
+.m-setup__num{display:flex;align-items:baseline;gap:8px}
+.m-setup__num b{font-family:var(--xp-serif);font-size:46px;font-weight:600;color:var(--xp-ink);line-height:.9}
+.m-setup__num em{font-style:normal;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--xp-muted)}
+.m-setup__lbl{font-size:15px;font-weight:600;color:var(--xp-slate);margin-top:10px}
+
+.m-table{background:#fff;border:1px solid var(--xp-line);border-radius:var(--xp-r-lg);box-shadow:var(--xp-shadow-xs);overflow:hidden;align-self:start}
+.m-table__head{display:flex;align-items:center;justify-content:space-between;padding:22px 26px;background:var(--xp-sea-deep);color:#fff}
+.m-table__head h4{margin:0;font-family:var(--xp-serif);font-size:20px;font-weight:600}
+html[dir="rtl"] .m-table__head h4{font-family:var(--x-ar-serif)}
+.m-table__head span{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--xp-gold-soft);font-weight:700}
+.m-trow{display:flex;align-items:center;justify-content:space-between;padding:17px 26px;border-bottom:1px solid var(--xp-line-soft)}
+.m-trow:last-child{border-bottom:none}
+.m-trow:nth-child(even){background:var(--xp-cream)}
+.m-trow__name{display:flex;align-items:center;gap:13px;font-size:15px;font-weight:500;color:var(--xp-ink)}
+.m-trow__name i{width:19px;height:19px;color:var(--xp-sea);flex:none}
+.m-trow__cap{font-family:var(--xp-serif);font-size:24px;font-weight:600;color:var(--xp-gold-deep);min-width:48px;text-align:right}
+html[dir="rtl"] .m-trow__cap{text-align:left}
+.m-table__foot{padding:16px 26px;font-size:12.5px;color:var(--xp-muted);background:var(--xp-cream);border-top:1px solid var(--xp-line)}
+
+/* ---------- ENQUIRY FORM (sea-deep band) ---------- */
+.m-enqband{background:var(--xp-sea-deep);color:#fff}
+.m-enq{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--xp-r-lg);padding:16px;margin-top:34px;text-align:left}
+html[dir="rtl"] .m-enq{text-align:right}
+.m-enq__field{display:flex;flex-direction:column;gap:7px}
+.m-enq__field label{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--xp-gold-soft);padding-left:2px}
+.m-enq__field select,.m-enq__field input{font-family:inherit;font-size:15px;font-weight:500;color:#fff;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.18);border-radius:var(--xp-r-md);padding:14px 16px;width:100%;cursor:pointer;appearance:none;-webkit-appearance:none}
+.m-enq__field input{cursor:text}
+.m-enq__field input::placeholder{color:var(--xp-on-dark-mut)}
+.m-enq__field input[type="date"]{color-scheme:dark}
+.m-enq__field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23D8C49A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:42px}
+html[dir="rtl"] .m-enq__field select{background-position:left 16px center;padding-right:16px;padding-left:42px}
+.m-enq__field select option{color:#1C1F22}
+.m-enq__field select:focus,.m-enq__field input:focus{outline:none;border-color:var(--xp-gold);box-shadow:0 0 0 3px rgba(216,196,154,.3)}
+.m-enq__go{grid-column:1/-1;justify-content:center;width:100%}
+.m-enqnote{display:inline-flex;align-items:center;gap:10px;margin-top:18px;font-size:13.5px;color:var(--xp-on-dark-mut)}
+.m-enqnote i{width:16px;height:16px;color:var(--xp-gold-soft)}
+
+/* success state */
+.m-enq__done{display:none;flex-direction:column;align-items:center;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--xp-r-lg);padding:46px 24px;margin-top:34px}
+.m-enq__done.is-on{display:flex}
+.m-enq.is-hidden{display:none}
+.m-enq__check{width:64px;height:64px;border-radius:50%;background:var(--xp-gold);color:#2A2310;display:grid;place-items:center;margin-bottom:16px}
+.m-enq__check i{width:30px;height:30px;stroke-width:2.4}
+.m-enq__done h3{font-family:var(--xp-serif);font-size:26px;font-weight:600;color:#fff;margin:0 0 10px}
+html[dir="rtl"] .m-enq__done h3{font-family:var(--x-ar-serif)}
+.m-enq__done p{font-size:15px;color:var(--xp-on-dark-mut);line-height:1.6;max-width:420px;margin:0}
+
+@media (max-width:1080px){
+  .m-ball{grid-template-columns:1fr}
+  .m-ball__media{min-height:320px}
+  .m-cap{grid-template-columns:1fr}
+  .m-enq{grid-template-columns:1fr 1fr}
+}
+@media (max-width:680px){
+  #ballroom,#venues,#capacity,#weddings,#services,#enquire{scroll-margin-top:150px}
+  .m-specs{grid-template-columns:1fr 1fr}
+  /* minmax(0,…) lets the cards shrink below their intrinsic width
+     (the 46px serif numeral + SEATS label) instead of overflowing */
+  .m-setups{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .m-enq{grid-template-columns:1fr}
+}
+
+/* narrow phones — the two-up setup cards can't fit the big numerals,
+   so stack them and tighten the table/card chrome */
+@media (max-width:480px){
+  .m-setups{grid-template-columns:1fr;gap:12px}
+  .m-setup{display:flex;align-items:center;gap:16px;padding:18px 20px}
+  .m-setup__ic{margin-bottom:0;flex:none}
+  .m-setup__num{margin-left:auto;order:1}
+  html[dir="rtl"] .m-setup__num{margin-left:0;margin-right:auto}
+  .m-setup__num b{font-size:34px}
+  .m-setup__lbl{margin-top:0}
+  .m-table__head{padding:18px 20px}
+  .m-trow{padding:14px 20px}
+  .m-trow__name{font-size:14px;gap:10px}
+  .m-trow__cap{font-size:21px}
+  .m-table__foot{padding:14px 20px}
+  .m-ball__panel{padding:28px 22px}
+  .m-specs{gap:16px 18px}
+}

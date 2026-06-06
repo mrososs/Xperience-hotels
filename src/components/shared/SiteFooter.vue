@@ -36,10 +36,10 @@ onMounted(ensureIcons)
             <h4>{{ t('footer.company') }}</h4>
             <RouterLink to="/about">{{ t('footer.aboutUs') }}</RouterLink>
             <RouterLink to="/awards">{{ t('nav.awards') }}</RouterLink>
-            <a href="#">{{ t('footer.meetingsEvents') }}</a>
+            <RouterLink to="/meetings-events">{{ t('footer.meetingsEvents') }}</RouterLink>
             <RouterLink :to="{ path: '/', hash: '#offers' }">{{ t('footer.offers') }}</RouterLink>
             <a href="#">{{ t('footer.careers') }}</a>
-            <a href="#footer">{{ t('footer.contactUs') }}</a>
+            <RouterLink to="/contact">{{ t('footer.contactUs') }}</RouterLink>
           </div>
           <div class="x-fcol x-fnews">
             <h4>{{ t('footer.stayInTouch') }}</h4>

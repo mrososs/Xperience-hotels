@@ -2,6 +2,8 @@ import './styles/main.scss'
 import './styles/resort/site.css'
 import './styles/resort/hotel.css'
 import './styles/resort/about.css'
+import './styles/resort/meetings.css'
+import './styles/resort/contact.css'
 
 import { createApp, watch } from 'vue'
 import { createPinia } from 'pinia'
