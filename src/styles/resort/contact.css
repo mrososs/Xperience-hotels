@@ -76,7 +76,7 @@ html[dir="rtl"] .c-aside h3{font-family:var(--x-ar-serif)}
 
 /* ---------- LOCATIONS DIRECTORY + MAP ---------- */
 .c-loc{display:grid;grid-template-columns:380px 1fr;gap:0;border-radius:var(--xp-r-xl);overflow:hidden;box-shadow:var(--xp-shadow-md);border:1px solid var(--xp-line);background:#fff}
-.c-loclist{display:flex;flex-direction:column;max-height:560px;overflow-y:auto;scrollbar-width:thin}
+.c-loclist{display:flex;flex-direction:column;max-height:560px;overflow-y:auto}
 .c-locitem{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;background:#fff;border:none;border-bottom:1px solid var(--xp-line-soft);padding:20px 24px;cursor:pointer;transition:background .25s;font-family:inherit;position:relative}
 html[dir="rtl"] .c-locitem{text-align:right}
 .c-locitem:hover{background:var(--xp-cream)}
