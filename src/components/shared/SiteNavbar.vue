@@ -31,13 +31,13 @@ const { scrolled } = useScrollState(40)
 // soon as the user scrolls away from an anchor jump).
 const route = useRoute()
 const { current: spySection } = useScrollSpy(
-  ['resorts', 'offers', 'footer'],
+  ['resorts', 'offers'],
   () => route.path === '/',
 )
 const homeActive = computed(() => route.path === '/' && !spySection.value)
 const resortsActive = computed(() => route.path.startsWith('/resorts') || spySection.value === 'resorts')
 const offersActive = computed(() => spySection.value === 'offers')
-const contactActive = computed(() => spySection.value === 'footer')
+const contactActive = computed(() => route.path === '/contact')
 const awardsActive = computed(() => route.path === '/awards')
 const meetingsActive = computed(() => route.path === '/meetings-events')
 const aboutActive = computed(() => route.path === '/about')
@@ -104,7 +104,7 @@ watch(locale, () => nextTick(drawIcons))
         <RouterLink class="x-navlink" :class="{ 'is-active': awardsActive }" to="/awards">{{ t('nav.awards') }}</RouterLink>
         <RouterLink class="x-navlink" :class="{ 'is-active': meetingsActive }" to="/meetings-events">{{ t('nav.meetings') }}</RouterLink>
         <RouterLink class="x-navlink" :class="{ 'is-active': aboutActive }" to="/about">{{ t('nav.about') }}</RouterLink>
-        <a class="x-navlink" :class="{ 'is-active': contactActive }" href="#footer">{{ t('nav.contact') }}</a>
+        <RouterLink class="x-navlink" :class="{ 'is-active': contactActive }" to="/contact">{{ t('nav.contact') }}</RouterLink>
       </nav>
       <div class="x-nav__right">
         <div class="x-lang">
@@ -149,7 +149,7 @@ watch(locale, () => nextTick(drawIcons))
     <RouterLink to="/awards" @click="closeSheet">{{ t('nav.awards') }}</RouterLink>
     <RouterLink to="/meetings-events" @click="closeSheet">{{ t('nav.meetings') }}</RouterLink>
     <RouterLink to="/about" @click="closeSheet">{{ t('nav.about') }}</RouterLink>
-    <a href="#footer" @click="closeSheet">{{ t('nav.contact') }}</a>
+    <RouterLink to="/contact" @click="closeSheet">{{ t('nav.contact') }}</RouterLink>
     <button class="x-btn x-btn--gold x-sheet__cta" @click="onBook">{{ t('common.bookNow') }}</button>
   </nav>
 </template>

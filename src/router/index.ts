@@ -47,6 +47,11 @@ const router = createRouter({
       component: () => import('../views/MeetingsEventsView.vue'),
     },
     {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('../views/ContactView.vue'),
+    },
+    {
       // Dynamic resort detail page. Each slug resolves to its own
       // per-resort component (which feeds the shared ResortDetail).
       path: '/resorts/:slug',
