@@ -39,6 +39,7 @@ const resortsActive = computed(() => route.path.startsWith('/resorts') || spySec
 const offersActive = computed(() => spySection.value === 'offers')
 const contactActive = computed(() => spySection.value === 'footer')
 const awardsActive = computed(() => route.path === '/awards')
+const meetingsActive = computed(() => route.path === '/meetings-events')
 const aboutActive = computed(() => route.path === '/about')
 
 const megaOpen = ref(false)
@@ -101,6 +102,7 @@ watch(locale, () => nextTick(drawIcons))
         </button>
         <RouterLink class="x-navlink" :class="{ 'is-active': offersActive }" :to="{ path: '/', hash: '#offers' }">{{ t('nav.offers') }}</RouterLink>
         <RouterLink class="x-navlink" :class="{ 'is-active': awardsActive }" to="/awards">{{ t('nav.awards') }}</RouterLink>
+        <RouterLink class="x-navlink" :class="{ 'is-active': meetingsActive }" to="/meetings-events">{{ t('nav.meetings') }}</RouterLink>
         <RouterLink class="x-navlink" :class="{ 'is-active': aboutActive }" to="/about">{{ t('nav.about') }}</RouterLink>
         <a class="x-navlink" :class="{ 'is-active': contactActive }" href="#footer">{{ t('nav.contact') }}</a>
       </nav>
@@ -145,6 +147,7 @@ watch(locale, () => nextTick(drawIcons))
     <RouterLink :to="{ path: '/', hash: '#resorts' }" @click="closeSheet">{{ t('nav.resorts') }}</RouterLink>
     <RouterLink :to="{ path: '/', hash: '#offers' }" @click="closeSheet">{{ t('nav.offers') }}</RouterLink>
     <RouterLink to="/awards" @click="closeSheet">{{ t('nav.awards') }}</RouterLink>
+    <RouterLink to="/meetings-events" @click="closeSheet">{{ t('nav.meetings') }}</RouterLink>
     <RouterLink to="/about" @click="closeSheet">{{ t('nav.about') }}</RouterLink>
     <a href="#footer" @click="closeSheet">{{ t('nav.contact') }}</a>
     <button class="x-btn x-btn--gold x-sheet__cta" @click="onBook">{{ t('common.bookNow') }}</button>
