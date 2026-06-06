@@ -32,6 +32,29 @@ button{font-family:inherit}
 i[data-lucide]{width:18px;height:18px;stroke-width:1.6;flex:none}
 ::selection{background:var(--xp-gold-soft);color:var(--xp-ink)}
 
+/* ===========================================================
+   SCROLLBAR — slim floating champagne-gold pill, unobtrusive
+   =========================================================== */
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,var(--xp-gold-soft),var(--xp-gold));
+  background-clip:padding-box;
+  border:4px solid transparent;
+  border-radius:999px;
+  min-height:48px;
+}
+::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,var(--xp-gold),var(--xp-gold-deep));
+  background-clip:padding-box;
+  border-width:3px;
+}
+::-webkit-scrollbar-corner{background:transparent}
+/* Firefox — no ::-webkit-scrollbar support, use the standard props */
+@supports not selector(::-webkit-scrollbar){
+  *{scrollbar-width:thin;scrollbar-color:var(--xp-gold-soft) transparent}
+}
+
 /* RTL: swap fonts + alignment */
 html[dir="rtl"] body{font-family:var(--x-ar-sans)}
 html[dir="rtl"] .x-display,
