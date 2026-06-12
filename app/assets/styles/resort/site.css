@@ -29,7 +29,10 @@ body{
 img{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
 button{font-family:inherit}
-i[data-lucide]{width:18px;height:18px;stroke-width:1.6;flex:none}
+/* The <i data-lucide> host carries no box of its own; the injected <svg>
+   (see useLucideIcons.drawIcons) takes the host's place in the layout, just
+   as the old createIcons()-replaced <svg> did. Sizing/stroke stay on the svg. */
+i[data-lucide]{display:contents}
 ::selection{background:var(--xp-gold-soft);color:var(--xp-ink)}
 
 /* ===========================================================

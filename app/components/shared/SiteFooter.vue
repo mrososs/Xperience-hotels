@@ -46,7 +46,7 @@ onMounted(ensureIcons)
             <h4>{{ t('footer.stayInTouch') }}</h4>
             <p>{{ t('footer.newsletter') }}</p>
             <div class="x-fsignup">
-              <input type="email" name="email" :aria-label="t('footer.emailPlaceholder')" :placeholder="t('footer.emailPlaceholder')" />
+              <input type="email" name="email" autocomplete="email" :aria-label="t('footer.emailPlaceholder')" :placeholder="t('footer.emailPlaceholder')" />
               <button class="x-btn x-btn--gold">{{ t('footer.join') }}</button>
             </div>
           </div>
