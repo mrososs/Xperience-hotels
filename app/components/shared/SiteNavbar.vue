@@ -56,12 +56,12 @@ const chooseLocale = (code: string) => {
 const route = useRoute()
 const baseRoute = computed(() => String(route.name ?? '').split('___')[0])
 const { current: spySection } = useScrollSpy(
-  ['resorts', 'offers'],
+  ['resorts'],
   () => baseRoute.value === 'index',
 )
 const homeActive = computed(() => baseRoute.value === 'index' && !spySection.value)
 const resortsActive = computed(() => baseRoute.value === 'resorts-slug' || spySection.value === 'resorts')
-const offersActive = computed(() => spySection.value === 'offers')
+const offersActive = computed(() => baseRoute.value === 'offers')
 const contactActive = computed(() => baseRoute.value === 'contact')
 const awardsActive = computed(() => baseRoute.value === 'awards')
 const meetingsActive = computed(() => baseRoute.value === 'meetings-events')
@@ -133,7 +133,7 @@ watch(locale, () => nextTick(drawIcons))
           {{ t('nav.resorts') }}
           <i data-lucide="chevron-down"></i>
         </button>
-        <NuxtLink class="x-navlink" :class="{ 'is-active': offersActive }" :to="localePath({ path: '/', hash: '#offers' })">{{ t('nav.offers') }}</NuxtLink>
+        <NuxtLink class="x-navlink" :class="{ 'is-active': offersActive }" :to="localePath('/offers')">{{ t('nav.offers') }}</NuxtLink>
         <NuxtLink class="x-navlink" :class="{ 'is-active': awardsActive }" :to="localePath('/awards')">{{ t('nav.awards') }}</NuxtLink>
         <NuxtLink class="x-navlink" :class="{ 'is-active': meetingsActive }" :to="localePath('/meetings-events')">{{ t('nav.meetings') }}</NuxtLink>
         <NuxtLink class="x-navlink" :class="{ 'is-active': aboutActive }" :to="localePath('/about')">{{ t('nav.about') }}</NuxtLink>
@@ -203,7 +203,7 @@ watch(locale, () => nextTick(drawIcons))
     <button class="x-sheet__close" aria-label="Close menu" @click="closeSheet"><i data-lucide="x"></i></button>
     <NuxtLink :to="localePath('/')" @click="closeSheet">{{ t('nav.home') }}</NuxtLink>
     <NuxtLink :to="localePath({ path: '/', hash: '#resorts' })" @click="closeSheet">{{ t('nav.resorts') }}</NuxtLink>
-    <NuxtLink :to="localePath({ path: '/', hash: '#offers' })" @click="closeSheet">{{ t('nav.offers') }}</NuxtLink>
+    <NuxtLink :to="localePath('/offers')" @click="closeSheet">{{ t('nav.offers') }}</NuxtLink>
     <NuxtLink :to="localePath('/awards')" @click="closeSheet">{{ t('nav.awards') }}</NuxtLink>
     <NuxtLink :to="localePath('/meetings-events')" @click="closeSheet">{{ t('nav.meetings') }}</NuxtLink>
     <NuxtLink :to="localePath('/about')" @click="closeSheet">{{ t('nav.about') }}</NuxtLink>

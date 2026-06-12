@@ -19,6 +19,10 @@
     "contact": {
       "title": "Kontakt — Xperience Hotels",
       "description": "Kontaktieren Sie Xperience Hotels — Reservierungen, Hauptsitz und unsere sechs Resortstandorte am Roten Meer in Sharm El Sheikh."
+    },
+    "offers": {
+      "title": "Sonderangebote — Xperience Hotels",
+      "description": "Flitterwochen-Pakete und Vorteile bei Direktbuchung in den sechs Resorts von Xperience Hotels am Roten Meer in Sharm El Sheikh — VIP-Behandlung, Zimmer-Upgrades und mehr."
     }
   },
   "common": {
@@ -302,6 +306,15 @@
     "reservedSub": "Eine Bestätigung ist unterwegs. Wir freuen uns darauf, Sie am Roten Meer begrüßen zu dürfen.",
     "done": "Fertig"
   },
+  "exitIntent": {
+    "eyebrow": "Warten Sie — bevor Sie gehen",
+    "title": "Direkt buchen & sparen",
+    "body": "Buchen Sie auf unserer Website für eine VIP-Behandlung, flexibles Check-in und den besten Preis — direkt vom Resort.",
+    "offer": "10% Rabatt auf Spa, Tauchen & Restaurants + früher Check-in",
+    "cta": "Direktangebote ansehen",
+    "dismiss": "Nein danke, vielleicht später",
+    "close": "Schließen"
+  },
   "resort": {
     "fiveStar": "5-Sterne-Resort",
     "factPrivateBeach": "Privatstrand",
@@ -345,5 +358,23 @@
     "reviewsTitle": "Von Familien geliebt",
     "bookbandEyebrow": "Reservieren Sie Ihren Aufenthalt",
     "bookbandTitle": "Bereit für das Rote Meer?"
+  },
+  "offers": {
+    "eyebrow": "Sonderangebote",
+    "heroTitle1": "Momente, die",
+    "heroTitle2": "man feiern sollte",
+    "heroSub": "Maßgeschneiderte Pakete in unseren Resorts am Roten Meer — buchen Sie direkt auf unserer Website und überlassen Sie den Rest unseren Teams.",
+    "honeymoonEyebrow": "Zu zweit",
+    "honeymoonTitle": "Flitterwochen-Pakete",
+    "honeymoonLead": "Beginnen Sie Ihr gemeinsames Leben am Roten Meer. Jedes Resort empfängt Hochzeitsreisende mit eigenen, liebevollen Aufmerksamkeiten — von der Hochzeitstorte bis zum Dinner bei Kerzenschein.",
+    "cardTag": "Flitterwochen-Paket",
+    "viewResort": "Resort ansehen",
+    "fineprint": "Alle Pakete sind von der Verfügbarkeit des Hotels abhängig. Hochzeitsreisende werden beim Check-in möglicherweise um eine Kopie der Heiratsurkunde gebeten.",
+    "benefitsEyebrow": "Direkt buchen",
+    "benefitsTitle": "Jede Direktbuchung bringt Vorteile",
+    "benefitsLead": "Buchen Sie auf unserer Website und sichern Sie sich Vorteile, die Sie nirgendwo sonst finden.",
+    "ctaEyebrow": "Gemeinsam beginnen",
+    "ctaTitle": "Ihre Flitterwochen am Roten Meer beginnen hier",
+    "ctaExplore": "Resorts entdecken"
   }
 }

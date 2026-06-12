@@ -15,6 +15,9 @@ export type Locale = 'en' | 'ar' | 'de' | 'it' | 'ru'
 interface Bi {
   en: string
   ar: string
+  de?: string
+  it?: string
+  ru?: string
 }
 
 export function useLocale() {
@@ -35,9 +38,9 @@ export function useLocale() {
 
   const isRtl = computed(() => locale.value === 'ar')
 
-  /** Pick the right language from a bilingual data object. */
+  /** Pick the current language from a localized data object (falls back to en). */
   function tBi(value: Bi): string {
-    return locale.value === 'ar' ? value.ar : value.en
+    return (value as Record<string, string | undefined>)[locale.value] ?? value.en
   }
 
   return { locale, locales, setLocale, t, tBi, isRtl }

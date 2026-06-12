@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     '~/assets/styles/resort/about.css',
     '~/assets/styles/resort/meetings.css',
     '~/assets/styles/resort/contact.css',
+    '~/assets/styles/resort/offers.css',
   ],
 
   app: {

@@ -38,7 +38,7 @@ onMounted(ensureIcons)
             <NuxtLink :to="localePath('/about')">{{ t('footer.aboutUs') }}</NuxtLink>
             <NuxtLink :to="localePath('/awards')">{{ t('nav.awards') }}</NuxtLink>
             <NuxtLink :to="localePath('/meetings-events')">{{ t('footer.meetingsEvents') }}</NuxtLink>
-            <NuxtLink :to="localePath({ path: '/', hash: '#offers' })">{{ t('footer.offers') }}</NuxtLink>
+            <NuxtLink :to="localePath('/offers')">{{ t('footer.offers') }}</NuxtLink>
             <a href="#">{{ t('footer.careers') }}</a>
             <NuxtLink :to="localePath('/contact')">{{ t('footer.contactUs') }}</NuxtLink>
           </div>

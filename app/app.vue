@@ -3,6 +3,8 @@
 // alternates + og:locale on every page. Replaces the old main.ts watcher
 // and applyHtmlLang() — the server now renders <html lang="ar" dir="rtl">
 // for /ar pages, which the SPA could never do.
+import ExitIntentOffer from '@/components/shared/ExitIntentOffer.vue'
+
 const head = useLocaleHead({ seo: true })
 useHead(() => ({
   htmlAttrs: head.value.htmlAttrs,
@@ -13,4 +15,6 @@ useHead(() => ({
 
 <template>
   <NuxtPage />
+  <!-- Site-wide last-chance offer; self-arms and Teleports to <body>. -->
+  <ExitIntentOffer />
 </template>

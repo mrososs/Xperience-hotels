@@ -19,6 +19,10 @@
     "contact": {
       "title": "Contact Us — Xperience Hotels",
       "description": "Get in touch with Xperience Hotels — reservations, head office and our six Red Sea resort locations in Sharm El Sheikh."
+    },
+    "offers": {
+      "title": "Special Offers — Xperience Hotels",
+      "description": "Honeymooner packages and book-direct benefits across Xperience Hotels' six Red Sea resorts in Sharm El Sheikh — VIP treatment, room upgrades and more."
     }
   },
   "common": {
@@ -302,6 +306,15 @@
     "reservedSub": "A confirmation is on its way. We look forward to welcoming you to the Red Sea.",
     "done": "Done"
   },
+  "exitIntent": {
+    "eyebrow": "Wait — before you go",
+    "title": "Book direct & save",
+    "body": "Reserve on our site for VIP treatment, flexible check-in and the best rate — straight from the resort.",
+    "offer": "10% off spa, diving & dining + early check-in",
+    "cta": "See direct offers",
+    "dismiss": "No thanks, maybe later",
+    "close": "Close"
+  },
   "resort": {
     "fiveStar": "5-Star Resort",
     "factPrivateBeach": "Private beach",
@@ -345,5 +358,23 @@
     "reviewsTitle": "Loved by families",
     "bookbandEyebrow": "Reserve your stay",
     "bookbandTitle": "Ready for the Red Sea?"
+  },
+  "offers": {
+    "eyebrow": "Special Offers",
+    "heroTitle1": "Moments worth",
+    "heroTitle2": "celebrating",
+    "heroSub": "Tailor-made packages across our Red Sea resorts — book direct on our site and let our teams take care of the rest.",
+    "honeymoonEyebrow": "For Two",
+    "honeymoonTitle": "Honeymooner Packages",
+    "honeymoonLead": "Begin your life together by the Red Sea. Each resort welcomes honeymooners with its own set of thoughtful touches — from wedding cake to candle-lit dinners.",
+    "cardTag": "Honeymoon Package",
+    "viewResort": "View resort",
+    "fineprint": "All packages are subject to hotel availability. Honeymooners may be asked for a copy of the marriage certificate at check-in.",
+    "benefitsEyebrow": "Book Direct",
+    "benefitsTitle": "Every direct booking comes with benefits",
+    "benefitsLead": "Reserve on our site and unlock perks you won't find anywhere else.",
+    "ctaEyebrow": "Begin together",
+    "ctaTitle": "Your honeymoon on the Red Sea starts here",
+    "ctaExplore": "Explore Resorts"
   }
 }

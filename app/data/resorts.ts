@@ -10,6 +10,12 @@
 export interface Bilingual {
   en: string
   ar: string
+  // Optional wider-locale translations. When absent, tBi() falls back to
+  // `en` — so en/ar-only records keep their existing behaviour while data
+  // that needs all five locales (e.g. the offers packages) can supply them.
+  de?: string
+  it?: string
+  ru?: string
 }
 
 export interface QuickFact {

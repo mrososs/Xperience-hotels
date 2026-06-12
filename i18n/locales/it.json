@@ -19,6 +19,10 @@
     "contact": {
       "title": "Contatti — Xperience Hotels",
       "description": "Contatta Xperience Hotels — prenotazioni, sede centrale e le nostre sei sedi resort sul Mar Rosso a Sharm El Sheikh."
+    },
+    "offers": {
+      "title": "Offerte speciali — Xperience Hotels",
+      "description": "Pacchetti luna di miele e vantaggi della prenotazione diretta nei sei resort di Xperience Hotels sul Mar Rosso a Sharm El Sheikh — trattamento VIP, upgrade delle camere e altro ancora."
     }
   },
   "common": {
@@ -302,6 +306,15 @@
     "reservedSub": "Una conferma è in arrivo. Non vediamo l'ora di darti il benvenuto sul Mar Rosso.",
     "done": "Fatto"
   },
+  "exitIntent": {
+    "eyebrow": "Aspetta — prima di andare",
+    "title": "Prenota diretto e risparmia",
+    "body": "Prenota sul nostro sito per un trattamento VIP, check-in flessibile e la tariffa migliore — direttamente dal resort.",
+    "offer": "10% di sconto su spa, immersioni e ristoranti + check-in anticipato",
+    "cta": "Scopri le offerte dirette",
+    "dismiss": "No grazie, magari più tardi",
+    "close": "Chiudi"
+  },
   "resort": {
     "fiveStar": "Resort 5 stelle",
     "factPrivateBeach": "Spiaggia privata",
@@ -345,5 +358,23 @@
     "reviewsTitle": "Amato dalle famiglie",
     "bookbandEyebrow": "Prenota il tuo soggiorno",
     "bookbandTitle": "Pronto per il Mar Rosso?"
+  },
+  "offers": {
+    "eyebrow": "Offerte speciali",
+    "heroTitle1": "Momenti da",
+    "heroTitle2": "festeggiare",
+    "heroSub": "Pacchetti su misura nei nostri resort sul Mar Rosso — prenota direttamente sul nostro sito e lascia che i nostri team pensino al resto.",
+    "honeymoonEyebrow": "Per due",
+    "honeymoonTitle": "Pacchetti luna di miele",
+    "honeymoonLead": "Iniziate la vostra vita insieme sul Mar Rosso. Ogni resort accoglie gli sposi in luna di miele con attenzioni speciali — dalla torta nuziale alla cena a lume di candela.",
+    "cardTag": "Pacchetto luna di miele",
+    "viewResort": "Vedi resort",
+    "fineprint": "Tutti i pacchetti sono soggetti alla disponibilità dell'hotel. Agli sposi in luna di miele potrebbe essere richiesta una copia del certificato di matrimonio al check-in.",
+    "benefitsEyebrow": "Prenota diretto",
+    "benefitsTitle": "Ogni prenotazione diretta include dei vantaggi",
+    "benefitsLead": "Prenota sul nostro sito e sblocca vantaggi che non troverai da nessun'altra parte.",
+    "ctaEyebrow": "Iniziate insieme",
+    "ctaTitle": "La vostra luna di miele sul Mar Rosso inizia qui",
+    "ctaExplore": "Esplora i resort"
   }
 }
