@@ -145,13 +145,25 @@ html[dir="rtl"] .x-link:hover i{transform:scaleX(-1) translateX(3px)}
 .x-nav.is-stuck .x-navlink.is-active::after{background:var(--xp-gold)}
 .x-nav__right{display:flex;align-items:center;gap:14px;flex:none}
 
-/* language switcher */
-.x-lang{display:inline-flex;align-items:center;border-radius:var(--xp-r-pill);padding:3px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18)}
-.x-nav.is-stuck .x-lang{background:var(--xp-cream);border-color:var(--xp-line)}
-.x-lang button{border:none;background:transparent;font-size:12.5px;font-weight:700;letter-spacing:.04em;color:rgba(255,255,255,.7);padding:6px 12px;border-radius:var(--xp-r-pill);cursor:pointer;transition:.25s}
-.x-nav.is-stuck .x-lang button{color:var(--xp-muted)}
-.x-lang button.is-on{background:var(--xp-gold);color:#2A2310}
-.x-nav.is-stuck .x-lang button.is-on{color:#2A2310}
+/* language switcher — flag dropdown */
+.x-langsel{position:relative}
+.x-langsel__btn{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.12);
+  color:#fff;border-radius:var(--xp-r-pill);padding:5px 10px 5px 8px;font-size:12.5px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:.25s}
+.x-nav.is-stuck .x-langsel__btn{background:var(--xp-cream);border-color:var(--xp-line);color:var(--xp-ink)}
+.x-langsel__code{line-height:1}
+.x-langsel__chev{width:14px;height:14px;opacity:.7;transition:transform .25s}
+.x-langsel__btn[aria-expanded="true"] .x-langsel__chev{transform:rotate(180deg)}
+.x-langsel__menu{position:absolute;top:calc(100% + 8px);right:0;min-width:184px;list-style:none;margin:0;padding:6px;
+  background:#fff;border:1px solid var(--xp-line);border-radius:var(--xp-r-md);box-shadow:var(--xp-shadow-lg);z-index:120;
+  opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .25s var(--x-rise),transform .25s var(--x-rise),visibility .25s}
+html[dir="rtl"] .x-langsel__menu{right:auto;left:0}
+.x-langsel__menu.is-open{opacity:1;visibility:visible;transform:translateY(0)}
+.x-langsel__opt{display:flex;align-items:center;gap:10px;width:100%;border:none;background:transparent;padding:9px 10px;border-radius:var(--xp-r-sm);
+  font-family:var(--xp-sans);font-size:14px;font-weight:600;color:var(--xp-ink);cursor:pointer;text-align:start;transition:background .2s}
+.x-langsel__opt:hover{background:var(--xp-cream)}
+.x-langsel__opt.is-on{background:rgba(192,163,107,.14)}
+.x-langsel__opt span{flex:1}
+.x-langsel__tick{width:15px;height:15px;color:var(--xp-gold-deep)}
 
 /* mega menu */
 .x-mega{position:fixed;top:calc(18px + var(--x-nav-h) + 10px);left:50%;transform:translate(-50%,-12px);width:min(var(--x-maxw),calc(100% - 36px));
@@ -406,7 +418,7 @@ html[dir="rtl"] .x-modal__close{right:auto;left:18px}
   .x-nav__right{gap:8px}
   /* Book Now is one tap away in the mobile sheet — drop it from the bar */
   .x-nav__right > .x-btn{display:none}
-  .x-lang button{padding:6px 10px}
+  .x-langsel__btn{padding:5px 8px}
   .x-book{flex-wrap:wrap;position:relative}
   .x-book__field{flex:1 1 45%;border-right:none;position:static}
   html[dir="rtl"] .x-book__field{border-left:none}

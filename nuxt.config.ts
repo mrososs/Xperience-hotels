@@ -56,6 +56,9 @@ export default defineNuxtConfig({
     locales: [
       { code: 'en', language: 'en', dir: 'ltr', name: 'English', file: 'en.json' },
       { code: 'ar', language: 'ar', dir: 'rtl', name: 'العربية', file: 'ar.json' },
+      { code: 'de', language: 'de', dir: 'ltr', name: 'Deutsch', file: 'de.json' },
+      { code: 'it', language: 'it', dir: 'ltr', name: 'Italiano', file: 'it.json' },
+      { code: 'ru', language: 'ru', dir: 'ltr', name: 'Русский', file: 'ru.json' },
     ],
     baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://xperience-hotels.com',
     detectBrowserLanguage: {

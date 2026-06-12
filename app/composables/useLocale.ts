@@ -10,7 +10,7 @@
 import { computed } from 'vue'
 import { useI18n, useSwitchLocalePath, navigateTo } from '#imports'
 
-export type Locale = 'en' | 'ar'
+export type Locale = 'en' | 'ar' | 'de' | 'it' | 'ru'
 
 interface Bi {
   en: string
@@ -18,7 +18,7 @@ interface Bi {
 }
 
 export function useLocale() {
-  const { locale, t } = useI18n()
+  const { locale, t, locales } = useI18n()
   const switchLocalePath = useSwitchLocalePath()
 
   // Navigate to the same page under the other locale prefix. The i18n
@@ -35,5 +35,5 @@ export function useLocale() {
     return locale.value === 'ar' ? value.ar : value.en
   }
 
-  return { locale, setLocale, t, tBi, isRtl }
+  return { locale, locales, setLocale, t, tBi, isRtl }
 }

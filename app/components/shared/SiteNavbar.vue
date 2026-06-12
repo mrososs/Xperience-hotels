@@ -16,14 +16,33 @@ import { useScrollState } from '@/composables/useScrollState'
 import { useEventListener } from '@/composables/useEventListener'
 import { ensureIcons, drawIcons } from '@/composables/useLucideIcons'
 import { RESORT_LINKS } from '@/data/resorts'
+import { type Locale } from '@/composables/useLocale'
+import LangFlag from '@/components/ui/LangFlag.vue'
 import logoWhite from '@/assets/logo-xperience-white.png'
 import logoCharcoal from '@/assets/logo-xperience-charcoal.png'
 
 const emit = defineEmits<{ book: [] }>()
 
-const { locale, setLocale, t, tBi } = useLocale()
+const { locale, setLocale, t, tBi, locales } = useLocale()
 const { scrolled } = useScrollState(40)
 const localePath = useLocalePath()
+
+// Language switcher (flag dropdown). Native names come from the i18n
+// config; the trigger shows the active flag + uppercase code.
+const langOpen = ref(false)
+const langRef = ref<HTMLElement | null>(null)
+const localeOptions = computed(() =>
+  (locales.value as Array<{ code: string; name?: string }>).map((l) => ({
+    code: l.code,
+    name: l.name ?? l.code.toUpperCase(),
+  })),
+)
+const currentCode = computed(() => locale.value.toUpperCase())
+const chooseLocale = (code: string) => {
+  langOpen.value = false
+  sheetOpen.value = false
+  setLocale(code as Locale)
+}
 
 // Active nav state. Hash anchors share the "/" route (the router ignores the
 // hash when matching), so we resolve active links explicitly rather than via
@@ -71,6 +90,14 @@ useEventListener(() => document, 'click', ((e: MouseEvent) => {
   if (!triggerRef.value?.contains(target) && !megaRef.value?.contains(target)) megaOpen.value = false
 }) as EventListener)
 
+// close the language dropdown on an outside click / Escape
+useEventListener(() => document, 'click', ((e: MouseEvent) => {
+  if (langOpen.value && !langRef.value?.contains(e.target as Node)) langOpen.value = false
+}) as EventListener)
+useEventListener(() => document, 'keydown', ((e: KeyboardEvent) => {
+  if (e.key === 'Escape') langOpen.value = false
+}) as EventListener)
+
 const onBook = () => {
   sheetOpen.value = false
   emit('book')
@@ -113,9 +140,34 @@ watch(locale, () => nextTick(drawIcons))
         <NuxtLink class="x-navlink" :class="{ 'is-active': contactActive }" :to="localePath('/contact')">{{ t('nav.contact') }}</NuxtLink>
       </nav>
       <div class="x-nav__right">
-        <div class="x-lang">
-          <button :class="{ 'is-on': locale === 'en' }" @click="setLocale('en')">EN</button>
-          <button :class="{ 'is-on': locale === 'ar' }" @click="setLocale('ar')">ع</button>
+        <div ref="langRef" class="x-langsel">
+          <button
+            class="x-langsel__btn"
+            type="button"
+            :aria-expanded="langOpen"
+            aria-haspopup="listbox"
+            @click="langOpen = !langOpen"
+          >
+            <LangFlag :code="locale" />
+            <span class="x-langsel__code">{{ currentCode }}</span>
+            <i data-lucide="chevron-down" class="x-langsel__chev"></i>
+          </button>
+          <ul class="x-langsel__menu" :class="{ 'is-open': langOpen }" role="listbox">
+            <li v-for="l in localeOptions" :key="l.code">
+              <button
+                class="x-langsel__opt"
+                type="button"
+                role="option"
+                :aria-selected="l.code === locale"
+                :class="{ 'is-on': l.code === locale }"
+                @click="chooseLocale(l.code)"
+              >
+                <LangFlag :code="l.code" />
+                <span>{{ l.name }}</span>
+                <i v-if="l.code === locale" data-lucide="check" class="x-langsel__tick"></i>
+              </button>
+            </li>
+          </ul>
         </div>
         <button class="x-btn x-btn--gold x-btn--sm" @click="onBook">{{ t('common.bookNow') }}</button>
         <button class="x-burger" aria-label="Menu" @click="sheetOpen = !sheetOpen"><i data-lucide="menu"></i></button>
