@@ -19,7 +19,7 @@ const ICONS: Record<string, Component> = {
 </script>
 
 <template>
-  <section class="xpk-benefits" id="offers">
+  <section class="xpk-benefits">
     <div class="xpk-benefits__inner">
       <div class="xpk-benefits__head" v-reveal>
         <div class="xp-eyebrow">{{ t('benefits.eyebrow') }}</div>

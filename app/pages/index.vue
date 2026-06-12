@@ -4,6 +4,7 @@ import HeroSection from '@/components/landing/HeroSection.vue'
 import BookingBar from '@/components/landing/BookingBar.vue'
 import AwardsMarquee from '@/components/landing/AwardsMarquee.vue'
 import ResortsSection from '@/components/landing/ResortsSection.vue'
+import OffersSection from '@/components/landing/OffersSection.vue'
 import BenefitsSection from '@/components/landing/BenefitsSection.vue'
 import DiscoverSection from '@/components/landing/DiscoverSection.vue'
 import AboutSection from '@/components/landing/AboutSection.vue'
@@ -35,6 +36,7 @@ useSeoMeta({
     <BookingBar @search="openWithParty" />
     <AwardsMarquee />
     <ResortsSection @book="openBook" />
+    <OffersSection @book="openBook()" />
     <BenefitsSection />
     <DiscoverSection />
     <AboutSection />
