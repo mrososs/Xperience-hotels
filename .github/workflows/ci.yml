@@ -1,0 +1,34 @@
+name: CI
+
+# The site is server-rendered (Nuxt/Nitro) and can no longer be hosted on
+# GitHub Pages. This workflow is the PR/merge gate; deployment happens on
+# the SSR host (e.g. Vercel/Netlify connected to the repo, or a Node server
+# running `node .output/server/index.mjs`).
+
+on:
+  push:
+    branches: [main, development]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build (SSR)
+        run: npm run build
