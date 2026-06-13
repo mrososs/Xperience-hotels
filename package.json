@@ -33,5 +33,9 @@
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
+  },
+  "_overridesNote": "@bomb.sh/tab (via @nuxt/cli) needs commander ^13; svgo/xss/terser only use commander in their CLIs, not the programmatic APIs the build uses — so we converge on one version to keep `npm ci` in sync.",
+  "overrides": {
+    "commander": "13.1.0"
   }
 }
