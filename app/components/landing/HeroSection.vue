@@ -11,7 +11,7 @@
 // tracking is a scroll/rAF nearest-slide scan, which is robust whether
 // or not the drag engine has initialised.
 // =====================================================================
-import { ref, shallowRef, onMounted, onBeforeUnmount } from 'vue'
+import { ref, shallowRef, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useLocalePath, useHead } from '#imports'
 import { BlossomCarousel } from '@blossom-carousel/vue'
 import '@blossom-carousel/core/style.css'
@@ -21,16 +21,59 @@ import { useBgImage, HERO_BG } from '@/composables/useBgImage'
 import { RESORTS } from '@/data/resorts'
 import { RESORTS as CONTENT_RESORTS } from '@/data/content'
 import type { Resort as ContentResort } from '@/data/types'
+import type { HomeBlok } from '@/composables/useHomeContent'
 
+// Optional Storyblok `hero` blok (slides). When absent, falls back to the
+// rich RESORTS records (the pre-CMS behaviour). Slides are normalised to
+// plain strings/numbers so the template is source-agnostic.
+const props = defineProps<{ blok?: HomeBlok }>()
 const emit = defineEmits<{ book: [resort: ContentResort] }>()
 const { t, tBi, isRtl } = useLocale()
 const localePath = useLocalePath()
 const { bg, src } = useBgImage()
 
+interface HeroSlide {
+  name: string
+  area: string
+  blurb: string
+  hero: string
+  ratingScore: string | number
+  priceFrom: string | number
+  slug: string
+}
+
+const heroSlides = computed<HeroSlide[]>(() => {
+  const fromBlok = props.blok?.slides as
+    | { name: string; area: string; blurb: string; image: { filename?: string } | string; rating_score: string; price_from: string; slug: string }[]
+    | undefined
+  if (fromBlok?.length) {
+    return fromBlok.map((s) => ({
+      name: s.name,
+      area: s.area,
+      blurb: s.blurb,
+      // `image` is a Storyblok asset object ({ filename }); tolerate a bare
+      // string too (legacy/fallback).
+      hero: typeof s.image === 'string' ? s.image : (s.image?.filename ?? ''),
+      ratingScore: s.rating_score,
+      priceFrom: s.price_from,
+      slug: s.slug,
+    }))
+  }
+  return RESORTS.map((r) => ({
+    name: tBi(r.name),
+    area: tBi(r.area),
+    blurb: tBi(r.blurb),
+    hero: r.hero,
+    ratingScore: r.ratingScore,
+    priceFrom: r.priceFrom,
+    slug: r.slug,
+  }))
+})
+
 // The first slide's background is the home page's LCP candidate. Preload
 // the exact optimized URL the slide renders (same width → no double fetch)
 // at high priority so it isn't discovered only after CSS + carousel JS.
-const heroLcp = RESORTS[0]?.hero
+const heroLcp = heroSlides.value[0]?.hero
 useHead({
   link: heroLcp
     ? [{ rel: 'preload', as: 'image', href: src(heroLcp, HERO_BG), fetchpriority: 'high' }]
@@ -47,7 +90,7 @@ const L = {
   play: { en: 'Resume auto-rotation', ar: 'استئناف التبديل التلقائي' },
 }
 
-const count = RESORTS.length
+const count = heroSlides.value.length
 const active = shallowRef(0)
 const playing = shallowRef(false)
 // Only the first slide's background is on the critical path (it's the LCP +
@@ -167,6 +210,7 @@ onBeforeUnmount(() => {
 
 <template>
   <section
+    v-editable="blok"
     class="xpk-herocar"
     :aria-label="tBi(L.region)"
     aria-roledescription="carousel"
@@ -176,13 +220,13 @@ onBeforeUnmount(() => {
   >
     <BlossomCarousel ref="carousel" class="xpk-herocar__track" load="always">
       <article
-        v-for="(r, i) in RESORTS"
+        v-for="(r, i) in heroSlides"
         :key="r.slug"
         class="xpk-herocar__slide"
         :class="{ 'is-active': active === i }"
         role="group"
         aria-roledescription="slide"
-        :aria-label="`${i + 1} / ${count} — ${tBi(r.name)}`"
+        :aria-label="`${i + 1} / ${count} — ${r.name}`"
       >
         <div
           class="xpk-herocar__media"
@@ -191,12 +235,12 @@ onBeforeUnmount(() => {
         <div class="xpk-herocar__scrim" />
 
         <div class="xpk-herocar__inner">
-          <div class="xp-eyebrow xpk-herocar__area"><MapPin /> {{ tBi(r.area) }}</div>
+          <div class="xp-eyebrow xpk-herocar__area"><MapPin /> {{ r.area }}</div>
           <h1 class="xpk-herocar__title">
             <span class="xpk-herocar__brand">Xperience</span>
-            {{ tBi(r.name) }}
+            {{ r.name }}
           </h1>
-          <p class="xpk-herocar__blurb">{{ tBi(r.blurb) }}</p>
+          <p class="xpk-herocar__blurb">{{ r.blurb }}</p>
 
           <div class="xpk-herocar__meta">
             <span class="xpk-herocar__rating"><Star /> {{ r.ratingScore }}</span>
@@ -227,12 +271,12 @@ onBeforeUnmount(() => {
         </span>
         <div class="xpk-herocar__dots">
           <button
-            v-for="(r, i) in RESORTS"
+            v-for="(r, i) in heroSlides"
             :key="r.slug"
             class="xpk-herocar__dot"
             :class="{ 'is-on': active === i }"
             type="button"
-            :aria-label="tBi(r.name)"
+            :aria-label="r.name"
             :aria-current="active === i ? 'true' : undefined"
             @click="goTo(i)"
           />

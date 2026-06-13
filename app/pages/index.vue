@@ -13,9 +13,15 @@ import SiteFooter from '@/components/shared/SiteFooter.vue'
 import BookModal from '@/components/landing/BookModal.vue'
 import { useBookingFlow } from '@/composables/useBookingFlow'
 import { useLocale } from '@/composables/useLocale'
+import { useHomeContent } from '@/composables/useHomeContent'
 import { RESORTS } from '@/data/resorts'
 
 const { selection, openBook, openWithParty, close } = useBookingFlow()
+
+// CMS seam: section content comes from the Storyblok "home" story when
+// present, else each section falls back to app/data. `bloks[name]` is the
+// blok for that section type (or undefined → fallback).
+const { bloks } = useHomeContent()
 
 const { t } = useLocale()
 useSeoMeta({
@@ -32,15 +38,15 @@ useSeoMeta({
 <template>
   <SiteNavbar @book="openBook()" />
   <main>
-    <HeroSection @book="openBook" />
+    <HeroSection :blok="bloks.hero" @book="openBook" />
     <BookingBar @search="openWithParty" />
-    <AwardsMarquee />
-    <ResortsSection @book="openBook" />
-    <OffersSection @book="openBook()" />
-    <BenefitsSection />
-    <DiscoverSection />
-    <AboutSection />
-    <HoneymoonSection @book="openBook()" />
+    <AwardsMarquee :blok="bloks.awards_marquee" />
+    <ResortsSection :blok="bloks.resorts_section" @book="openBook" />
+    <OffersSection :blok="bloks.offers_section" @book="openBook()" />
+    <BenefitsSection :blok="bloks.benefits_section" />
+    <DiscoverSection :blok="bloks.discover_section" />
+    <AboutSection :blok="bloks.about_section" />
+    <HoneymoonSection :blok="bloks.honeymoon_section" @book="openBook()" />
   </main>
   <SiteFooter />
 

@@ -6,7 +6,7 @@
 // the CMS can slot in without config churn.
 // =====================================================================
 export default defineNuxtConfig({
-  compatibilityDate: '2026-06-12',
+  compatibilityDate: "2026-06-12",
   devtools: { enabled: true },
 
   // Targeted SEO modules (sitemap + robots). Canonical URLs and hreflang
@@ -14,62 +14,116 @@ export default defineNuxtConfig({
   // JSON-LD is hand-rolled in the resort page — no extra modules needed.
   // @nuxt/image optimizes the (remote, brand-CDN) photography — resized +
   // AVIF/WebP — used through useBgImage() for the CSS background pattern.
-  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap', '@nuxtjs/robots', '@nuxt/image'],
+  modules: [
+    "@nuxtjs/i18n",
+    "@nuxtjs/sitemap",
+    "@nuxtjs/robots",
+    "@nuxt/image",
+    [
+      "@storyblok/nuxt",
+      {
+        // Content Delivery token (NUXT_STORYBLOK_TOKEN in .env). Space
+        // "xperience-hotels" lives in the EU region. A *public* token serves
+        // only published content; swap in a *preview* token to drive the
+        // Visual Editor / draft previews via the bridge.
+        accessToken: process.env.NUXT_STORYBLOK_TOKEN,
+        apiOptions: { region: "eu", cache: { type: "memory" } },
+        bridge: true,
+      },
+    ],
+  ],
 
   // Same order main.ts imported them: tokens/base first, page CSS after.
   css: [
-    '~/assets/styles/main.scss',
-    '~/assets/styles/resort/site.css',
-    '~/assets/styles/resort/hotel.css',
-    '~/assets/styles/resort/about.css',
-    '~/assets/styles/resort/meetings.css',
-    '~/assets/styles/resort/contact.css',
-    '~/assets/styles/resort/offers.css',
+    "~/assets/styles/main.scss",
+    "~/assets/styles/resort/site.css",
+    "~/assets/styles/resort/hotel.css",
+    "~/assets/styles/resort/about.css",
+    "~/assets/styles/resort/meetings.css",
+    "~/assets/styles/resort/contact.css",
+    "~/assets/styles/resort/offers.css",
   ],
 
   app: {
     head: {
       link: [
-        { rel: 'icon', type: 'image/png', href: '/favicon.png' },
-        { rel: 'apple-touch-icon', href: '/favicon.png' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        { rel: "icon", type: "image/png", href: "/favicon.png" },
+        { rel: "apple-touch-icon", href: "/favicon.png" },
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
         {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap',
+          rel: "preconnect",
+          href: "https://fonts.gstatic.com",
+          crossorigin: "",
+        },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap",
         },
       ],
       script: [
         // Mark JS as available so the reveal directive's hidden start state
         // only applies when we can animate it back in (no-JS shows everything).
-        { innerHTML: "document.documentElement.classList.add('js')", tagPriority: 'critical' },
+        {
+          innerHTML: "document.documentElement.classList.add('js')",
+          tagPriority: "critical",
+        },
       ],
     },
   },
 
   // Canonical URLs, og:url, sitemap and robots all derive from this.
   site: {
-    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://xperience-hotels.com',
-    name: 'Xperience Hotels',
+    url: process.env.NUXT_PUBLIC_SITE_URL || "https://xperience-hotels.com",
+    name: "Xperience Hotels",
   },
 
   i18n: {
-    defaultLocale: 'en',
-    strategy: 'prefix_except_default', // /  (en)  and  /ar/...
+    defaultLocale: "en",
+    strategy: "prefix_except_default", // /  (en)  and  /ar/...
     locales: [
-      { code: 'en', language: 'en', dir: 'ltr', name: 'English', file: 'en.json' },
-      { code: 'ar', language: 'ar', dir: 'rtl', name: 'العربية', file: 'ar.json' },
-      { code: 'de', language: 'de', dir: 'ltr', name: 'Deutsch', file: 'de.json' },
-      { code: 'it', language: 'it', dir: 'ltr', name: 'Italiano', file: 'it.json' },
-      { code: 'ru', language: 'ru', dir: 'ltr', name: 'Русский', file: 'ru.json' },
+      {
+        code: "en",
+        language: "en",
+        dir: "ltr",
+        name: "English",
+        file: "en.json",
+      },
+      {
+        code: "ar",
+        language: "ar",
+        dir: "rtl",
+        name: "العربية",
+        file: "ar.json",
+      },
+      {
+        code: "de",
+        language: "de",
+        dir: "ltr",
+        name: "Deutsch",
+        file: "de.json",
+      },
+      {
+        code: "it",
+        language: "it",
+        dir: "ltr",
+        name: "Italiano",
+        file: "it.json",
+      },
+      {
+        code: "ru",
+        language: "ru",
+        dir: "ltr",
+        name: "Русский",
+        file: "ru.json",
+      },
     ],
-    baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://xperience-hotels.com',
+    baseUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://xperience-hotels.com",
     detectBrowserLanguage: {
       useCookie: true,
-      cookieKey: 'xp-lang',
-      redirectOn: 'root', // keep deep links crawlable — only redirect on /
+      cookieKey: "xp-lang",
+      redirectOn: "root", // keep deep links crawlable — only redirect on /
       alwaysRedirect: false,
-      fallbackLocale: 'en',
+      fallbackLocale: "en",
     },
   },
 
@@ -78,8 +132,11 @@ export default defineNuxtConfig({
     // feed them explicitly. _i18nTransform expands each into en + ar entries
     // with hreflang alternates.
     urls: () =>
-      import('./app/data/resorts').then((m) =>
-        m.RESORTS.map((r) => ({ loc: `/resorts/${r.slug}`, _i18nTransform: true })),
+      import("./app/data/resorts").then((m) =>
+        m.RESORTS.map((r) => ({
+          loc: `/resorts/${r.slug}`,
+          _i18nTransform: true,
+        })),
       ),
   },
 
@@ -90,15 +147,17 @@ export default defineNuxtConfig({
   // is auto-selected. Backgrounds go through useBgImage()/$img (see that
   // composable); the few real <img>/<NuxtImg> tags use the same pipeline.
   image: {
-    domains: ['xperience-hotels.com', 'i.ytimg.com'],
+    domains: ["xperience-hotels.com", "i.ytimg.com", "a.storyblok.com", "a2.storyblok.com"],
     quality: 70,
-    format: ['avif', 'webp'],
+    format: ["avif", "webp"],
   },
 
   runtimeConfig: {
-    storyblokToken: '', // NUXT_STORYBLOK_TOKEN — server-side, future CMS
+    // Auto-bound from NUXT_STORYBLOK_TOKEN. Used by useResortContent's
+    // fetcher once it reads from Storyblok (see app/composables).
+    storyblokToken: "",
     public: {
-      siteUrl: '', // NUXT_PUBLIC_SITE_URL
+      siteUrl: "", // NUXT_PUBLIC_SITE_URL
     },
   },
-})
+});
