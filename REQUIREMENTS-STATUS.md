@@ -41,13 +41,13 @@ Each resort page is generated from one shared template (`ResortDetail.vue`).
 | 3.2 | Rooms | ✅ | Superior / Deluxe Sea View / Family Suite, per resort. |
 | 3.3 | Dining | ✅ | 3 venues per resort. |
 | 3.4 | Facilities | ✅ | Full facilities grid. |
-| 3.5 | Spa | 🟡 | Present only as a facility/benefit item — **no dedicated spa section/page.** |
-| 3.6 | Meetings / Events | 🟡 | Exists as a **site-level** page (`/meetings-events`) with an enquiry form, not as a per-hotel section. |
-| 3.7 | Weddings | 🟡 | Covered by honeymoon packages (site-level offers/landing), **not a dedicated weddings section** per hotel. |
-| 3.8 | Offers | 🟡 | Site-level `/offers` page + landing section; not surfaced per-hotel on the resort page. |
+| 3.5 | Spa | ✅ | Dedicated per-hotel **Spa** section on the resort page (`#spa`) — signature treatments + hammam, all 5 languages, book-direct spa discount tie-in. |
+| 3.6 | Meetings / Events | ✅ | Per-hotel **Meetings** teaser section (`#meetings`, ballroom photo + headline specs) that links to the full site-level `/meetings-events` page (single source of truth). |
+| 3.7 | Weddings | ✅ | Dedicated per-hotel **Weddings** section (`#weddings`) with highlights, linking to `/meetings-events#weddings`. |
+| 3.8 | Offers | ✅ | Per-hotel **Offers** teaser section (`#offers`, book-direct benefits) linking to the site-level `/offers` page. |
 | 3.9 | Gallery | ✅ | Carousel gallery (`@blossom-carousel/vue`). |
-| 3.10 | Reviews | 🟡 | Static review cards + rating bars (hardcoded). No live review feed. See 6.9. |
-| 3.11 | Location | ✅ | Address, phone, map pin label. (Static — no embedded interactive map.) |
+| 3.10 | Reviews | 🟡 | **Per-hotel** static review cards + rating bars + verified-stay count (distinct mock data per resort in `REVIEWS_BY_SLUG`, also feeding JSON-LD `aggregateRating`). UI + data shape are integration-ready — only the live **TripAdvisor/review feed** is pending (see 6.9). |
+| 3.11 | Location | ✅ | Per-hotel **interactive Leaflet map** (real coordinates, custom gold marker, CARTO tiles) + direction cards wiring coordinate-based Google Maps directions; address & phone. Geo coords also feed JSON-LD `geo`/`hasMap`. |
 | 3.12 | Booking widget | 🟡 | Booking modal present on the page; it's a **UI prototype** (no real engine — see 4.1). |
 
 ---
@@ -106,7 +106,7 @@ Requested: **English, Arabic, German, Italian, Russian.**
 | # | Item | Status | Notes |
 |---|------|:------:|-------|
 | 7.1 | SEO-friendly structure | ✅ | SSR HTML for every route (incl. all locale twins), semantic markup, clean URLs. |
-| 7.2 | Schema markup | ✅ | JSON-LD `Hotel` on resort pages. (Could extend: `Organization`, `BreadcrumbList`, `Offer`.) |
+| 7.2 | Schema markup | ✅ | JSON-LD `Hotel` on resort pages, now incl. `amenityFeature` (spa / events / weddings) and a book-direct `makesOffer`. (Could still extend: `Organization`, `BreadcrumbList`.) |
 | 7.3 | Landing pages | ✅ | `/offers` landing page; exit-intent funnels to it. |
 | 7.4 | Blog strategy | 🔴 | No blog (see 4.5). |
 | 7.5 | Image optimization | ✅ | `@nuxt/image` added. The pervasive CSS-`background-image` pattern routes through a `useBgImage()` helper (`$img`) so every image is resized per render-context and served as WebP (AVIF auto-negotiated on Vercel). Remote brand CDN + `i.ytimg.com` whitelisted in `image.domains`; IPX optimizes locally, Vercel's image CDN in production. |
