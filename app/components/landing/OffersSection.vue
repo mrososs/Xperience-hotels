@@ -10,52 +10,83 @@
 // offers anchor. Content: package data from @/data/offers (tBi), UI
 // strings from the shared offers.* i18n keys.
 // =====================================================================
+import { computed } from 'vue'
 import { ArrowRight, Check, Heart, MapPin } from '@lucide/vue'
 import { useLocalePath } from '#imports'
 import { useLocale } from '@/composables/useLocale'
 import { useBgImage } from '@/composables/useBgImage'
 import { HONEYMOON_PACKAGES } from '@/data/offers'
+import type { HomeBlok } from '@/composables/useHomeContent'
 
+// Optional Storyblok `offers_section` blok; falls back to app/data + i18n.
+const props = defineProps<{ blok?: HomeBlok }>()
 defineEmits<{ book: [] }>()
 
 const { t, tBi } = useLocale()
 const { bg } = useBgImage()
 const localePath = useLocalePath()
+
+const eyebrow = computed(() => (props.blok?.eyebrow as string) || t('offers.eyebrow'))
+const title = computed(() => (props.blok?.title as string) || t('offers.honeymoonTitle'))
+const lead = computed(() => (props.blok?.lead as string) || t('offers.honeymoonLead'))
+const cardTag = computed(() => (props.blok?.card_tag as string) || t('offers.cardTag'))
+const viewAll = computed(() => (props.blok?.view_all_label as string) || t('offers.viewAll'))
+
+const packages = computed(() => {
+  const fromBlok = props.blok?.packages as
+    | { full_name: string; location: string; image: { filename?: string } | string; perks: string }[]
+    | undefined
+  if (fromBlok?.length) {
+    return fromBlok.map((p) => ({
+      fullName: p.full_name,
+      loc: p.location,
+      // `image` is a Storyblok asset object ({ filename }); tolerate a string.
+      img: typeof p.image === 'string' ? p.image : (p.image?.filename ?? ''),
+      perks: (p.perks || '').split('\n').filter(Boolean),
+    }))
+  }
+  return HONEYMOON_PACKAGES.map((p) => ({
+    fullName: p.fullName,
+    loc: tBi(p.loc),
+    img: p.img,
+    perks: p.perks.map((perk) => tBi(perk)),
+  }))
+})
 </script>
 
 <template>
-  <section class="xpk-section xpk-offers" id="offers">
+  <section v-editable="blok" class="xpk-section xpk-offers" id="offers">
     <div class="xpk-section__head xpk-section__head--row" v-reveal>
       <div>
-        <div class="xp-eyebrow">{{ t('offers.eyebrow') }}</div>
-        <h2 class="xpk-section__title">{{ t('offers.honeymoonTitle') }}</h2>
-        <p class="xpk-section__lead">{{ t('offers.honeymoonLead') }}</p>
+        <div class="xp-eyebrow">{{ eyebrow }}</div>
+        <h2 class="xpk-section__title">{{ title }}</h2>
+        <p class="xpk-section__lead">{{ lead }}</p>
       </div>
       <NuxtLink class="xpk-offers__all" :to="localePath('/offers')">
-        {{ t('offers.viewAll') }} <ArrowRight />
+        {{ viewAll }} <ArrowRight />
       </NuxtLink>
     </div>
 
     <div class="xpk-offers__grid">
       <article
-        v-for="(pkg, i) in HONEYMOON_PACKAGES"
-        :key="pkg.slug"
+        v-for="(pkg, i) in packages"
+        :key="i"
         class="xpk-offer"
         v-reveal="i % 2"
       >
         <div class="xpk-offer__media" :style="bg(pkg.img, { width: 760 })">
-          <span class="xpk-offer__tag"><Heart /> {{ t('offers.cardTag') }}</span>
+          <span class="xpk-offer__tag"><Heart /> {{ cardTag }}</span>
         </div>
         <div class="xpk-offer__body">
           <h3 class="xpk-offer__name">{{ pkg.fullName }}</h3>
-          <span class="xpk-offer__loc"><MapPin /> {{ tBi(pkg.loc) }}</span>
+          <span class="xpk-offer__loc"><MapPin /> {{ pkg.loc }}</span>
           <ul class="xpk-offer__list">
-            <li v-for="(perk, p) in pkg.perks.slice(0, 4)" :key="p"><Check /> {{ tBi(perk) }}</li>
+            <li v-for="(perk, p) in pkg.perks.slice(0, 4)" :key="p"><Check /> {{ perk }}</li>
           </ul>
           <div class="xpk-offer__foot">
             <button class="xp-btn xp-btn--primary" @click="$emit('book')">{{ t('common.bookNow') }}</button>
             <NuxtLink class="xpk-offer__link" :to="localePath('/offers')">
-              {{ t('offers.viewAll') }} <ArrowRight />
+              {{ viewAll }} <ArrowRight />
             </NuxtLink>
           </div>
         </div>

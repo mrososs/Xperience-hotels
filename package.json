@@ -5,15 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "nuxt dev",
+    "dev:https": "nuxt dev --https --https.cert certs/localhost.pem --https.key certs/localhost-key.pem --port 3001",
     "build": "nuxt build",
     "preview": "nuxt preview",
     "typecheck": "nuxt typecheck",
+    "seed:storyblok": "node --env-file=.env scripts/storyblok-seed.mjs",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@blossom-carousel/vue": "^1.1.1",
     "@lucide/vue": "^1.17.0",
     "@nuxt/image": "^2.0.0",
+    "@storyblok/nuxt": "^10.1.10",
     "leaflet": "^1.9.4",
     "vue": "^3.5.32"
   },

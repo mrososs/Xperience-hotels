@@ -14,6 +14,14 @@ dist-ssr
 coverage
 *.local
 
+# Env / secrets (Storyblok tokens, site URL). .env.example IS committed.
+.env
+.env.*
+!.env.example
+
+# MCP config holds a plaintext Storyblok PAT — keep it out of git.
+.mcp.json
+
 # Nuxt
 .nuxt
 .output
@@ -49,3 +57,6 @@ __screenshots__/
 # Local design/QA screenshots
 .devshots/
 /screenshots/
+
+# mkcert-generated local TLS certs (dev HTTPS for Storyblok preview)
+certs/
