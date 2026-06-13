@@ -13,6 +13,7 @@
 import { computed, defineAsyncComponent, type Component } from 'vue'
 import { RESORT_SLUGS } from '@/data/resorts'
 import { useResortContent } from '@/composables/useResortContent'
+import { useBgImage, HERO_BG } from '@/composables/useBgImage'
 
 definePageMeta({
   validate: (route) => RESORT_SLUGS.has(String(route.params.slug ?? '')),
@@ -54,9 +55,16 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
+// Preload the resort hero (the LCP element) at high priority — the same
+// optimized URL ResortDetail's .h-hero__media background requests.
+const { src } = useBgImage()
+
 // JSON-LD Hotel schema for rich results — hand-rolled (no schema-org
 // module) so it stays dependency-free and fully under our control.
 useHead(() => ({
+  link: resort.value
+    ? [{ rel: 'preload', as: 'image', href: src(resort.value.hero, HERO_BG), fetchpriority: 'high' }]
+    : [],
   script: resort.value
     ? [
         {

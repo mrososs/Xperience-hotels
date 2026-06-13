@@ -12,11 +12,12 @@
 // or not the drag engine has initialised.
 // =====================================================================
 import { ref, shallowRef, onMounted, onBeforeUnmount } from 'vue'
-import { useLocalePath } from '#imports'
+import { useLocalePath, useHead } from '#imports'
 import { BlossomCarousel } from '@blossom-carousel/vue'
 import '@blossom-carousel/core/style.css'
 import { MapPin, Star, ArrowRight, ChevronLeft, ChevronRight, Play, Pause } from '@lucide/vue'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage, HERO_BG } from '@/composables/useBgImage'
 import { RESORTS } from '@/data/resorts'
 import { RESORTS as CONTENT_RESORTS } from '@/data/content'
 import type { Resort as ContentResort } from '@/data/types'
@@ -24,6 +25,17 @@ import type { Resort as ContentResort } from '@/data/types'
 const emit = defineEmits<{ book: [resort: ContentResort] }>()
 const { t, tBi, isRtl } = useLocale()
 const localePath = useLocalePath()
+const { bg, src } = useBgImage()
+
+// The first slide's background is the home page's LCP candidate. Preload
+// the exact optimized URL the slide renders (same width → no double fetch)
+// at high priority so it isn't discovered only after CSS + carousel JS.
+const heroLcp = RESORTS[0]?.hero
+useHead({
+  link: heroLcp
+    ? [{ rel: 'preload', as: 'image', href: src(heroLcp, HERO_BG), fetchpriority: 'high' }]
+    : [],
+})
 
 // Bilingual control labels kept local so we don't have to thread extra
 // keys through the i18n catalogs just for ARIA strings.
@@ -38,6 +50,11 @@ const L = {
 const count = RESORTS.length
 const active = shallowRef(0)
 const playing = shallowRef(false)
+// Only the first slide's background is on the critical path (it's the LCP +
+// the only visible slide). The other five are offscreen in the carousel, so
+// we hold their backgrounds until the browser is idle post-hydration —
+// trimming ~900 KB off the initial load without blocking first paint.
+const slidesReady = shallowRef(false)
 
 const carousel = ref<InstanceType<typeof BlossomCarousel> | null>(null)
 let slides: HTMLElement[] = []
@@ -133,6 +150,11 @@ onMounted(() => {
   // Auto-rotate only when motion is welcome; pause whenever the user is
   // hovering/focused inside the hero (wired in the template).
   startAuto()
+  // Load the remaining slide backgrounds once idle (well before the 6s
+  // auto-rotate or any drag could reveal them).
+  const ric = (window as Window & { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback
+  if (ric) ric(() => (slidesReady.value = true))
+  else window.setTimeout(() => (slidesReady.value = true), 200)
 })
 
 onBeforeUnmount(() => {
@@ -162,7 +184,10 @@ onBeforeUnmount(() => {
         aria-roledescription="slide"
         :aria-label="`${i + 1} / ${count} — ${tBi(r.name)}`"
       >
-        <div class="xpk-herocar__media" :style="{ backgroundImage: `url(${r.hero})` }" />
+        <div
+          class="xpk-herocar__media"
+          :style="i === 0 || slidesReady ? bg(r.hero, HERO_BG) : undefined"
+        />
         <div class="xpk-herocar__scrim" />
 
         <div class="xpk-herocar__inner">

@@ -40,7 +40,7 @@ export function useLocale() {
 
   /** Pick the current language from a localized data object (falls back to en). */
   function tBi(value: Bi): string {
-    return (value as Record<string, string | undefined>)[locale.value] ?? value.en
+    return (value as unknown as Record<string, string | undefined>)[locale.value] ?? value.en
   }
 
   return { locale, locales, setLocale, t, tBi, isRtl }

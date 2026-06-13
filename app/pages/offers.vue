@@ -12,6 +12,7 @@
 // =====================================================================
 import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage, HERO_BG } from '@/composables/useBgImage'
 import { setupResortPage, type ResortPageHandle } from '@/composables/useResortPage'
 import SiteNavbar from '@/components/shared/SiteNavbar.vue'
 import SiteFooter from '@/components/shared/SiteFooter.vue'
@@ -23,7 +24,7 @@ import {
 
 const { locale, t, tBi } = useLocale()
 const localePath = useLocalePath()
-const bg = (url: string) => `background-image:url('${url}')`
+const { bg, src } = useBgImage()
 
 useSeoMeta({
   title: () => t('seo.offers.title'),
@@ -33,6 +34,11 @@ useSeoMeta({
   ogType: 'website',
   ogImage: OFFERS_HERO_IMG,
   twitterCard: 'summary_large_image',
+})
+
+// Preload the page hero (LCP) — same optimized URL the .h-hero__media uses.
+useHead({
+  link: [{ rel: 'preload', as: 'image', href: src(OFFERS_HERO_IMG, HERO_BG), fetchpriority: 'high' }],
 })
 
 let page: ResortPageHandle | null = null
@@ -58,7 +64,7 @@ const onBook = (hotel?: string) => page?.open(hotel)
 
   <!-- ===================== PAGE HERO ===================== -->
   <section class="h-hero h-hero--page">
-    <div class="h-hero__media" :style="bg(OFFERS_HERO_IMG)"></div>
+    <div class="h-hero__media" :style="bg(OFFERS_HERO_IMG, HERO_BG)"></div>
     <div class="h-hero__scrim"></div>
     <div class="h-hero__inner x-wrap">
       <div class="x-eyebrow x-reveal" style="color:var(--xp-gold-soft)">{{ t('offers.eyebrow') }}</div>
@@ -86,7 +92,7 @@ const onBook = (hotel?: string) => page?.open(hotel)
           :data-delay="(i % 2) || undefined"
         >
           <div class="of-card__media">
-            <div class="of-card__img" :style="bg(pkg.img)"></div>
+            <div class="of-card__img" :style="bg(pkg.img, { width: 1000 })"></div>
             <div class="of-card__scrim"></div>
             <span class="of-card__tag"><i data-lucide="heart"></i> {{ t('offers.cardTag') }}</span>
           </div>

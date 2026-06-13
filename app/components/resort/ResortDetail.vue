@@ -10,6 +10,7 @@
 // =====================================================================
 import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage, HERO_BG } from '@/composables/useBgImage'
 import { setupResortPage, type ResortPageHandle } from '@/composables/useResortPage'
 import SiteNavbar from '@/components/shared/SiteNavbar.vue'
 import SiteFooter from '@/components/shared/SiteFooter.vue'
@@ -18,7 +19,7 @@ import type { Resort } from '@/data/resorts'
 const props = defineProps<{ resort: Resort }>()
 
 const { locale, t, tBi } = useLocale()
-const bg = (url: string) => `background-image:url('${url}')`
+const { bg } = useBgImage()
 
 let page: ResortPageHandle | null = null
 
@@ -43,7 +44,7 @@ const onBook = () => page?.open(props.resort.fullName)
 
   <!-- ===================== HOTEL HERO ===================== -->
   <section class="h-hero">
-    <div class="h-hero__media" :style="bg(resort.hero)"></div>
+    <div class="h-hero__media" :style="bg(resort.hero, HERO_BG)"></div>
     <div class="h-hero__scrim"></div>
     <div class="h-hero__inner x-wrap">
       <div class="h-hero__top x-reveal">
@@ -117,7 +118,7 @@ const onBook = () => page?.open(props.resort.fullName)
           class="h-gallery__cell"
           :class="{ 'h-gallery__cell--big': i === 0 }"
           :data-lb="img"
-          :style="bg(img)"
+          :style="bg(img, { width: i === 0 ? 1300 : 800 })"
         >
           <div v-if="i === resort.gallery.length - 1" class="h-gallery__more"><i data-lucide="images"></i> {{ t('resort.viewAllPhotos') }}</div>
         </div>
@@ -134,7 +135,7 @@ const onBook = () => page?.open(props.resort.fullName)
     </div>
     <div class="h-rooms">
       <article v-for="(room, i) in resort.rooms" :key="i" class="h-room x-reveal" :data-delay="i || undefined">
-        <div class="h-room__media" :style="bg(room.img)">
+        <div class="h-room__media" :style="bg(room.img, { width: 760 })">
           <span v-if="room.badge">{{ tBi(room.badge) }}</span>
         </div>
         <div class="h-room__body">
@@ -165,7 +166,7 @@ const onBook = () => page?.open(props.resort.fullName)
       </div>
       <div class="h-dining">
         <article v-for="(d, i) in resort.dining" :key="i" class="h-dine x-reveal" :data-delay="i || undefined">
-          <div class="h-dine__media" :style="bg(d.img)"></div>
+          <div class="h-dine__media" :style="bg(d.img, { width: 760 })"></div>
           <div class="h-dine__scrim"></div>
           <div class="h-dine__body">
             <span class="h-dine__tag">{{ tBi(d.tag) }}</span>
@@ -181,7 +182,7 @@ const onBook = () => page?.open(props.resort.fullName)
   <section class="x-band--sea" id="activities">
     <div class="x-section x-wrap">
       <div class="h-acts">
-        <div class="h-acts__media x-reveal" :style="bg(resort.gallery[1] ?? resort.hero)">
+        <div class="h-acts__media x-reveal" :style="bg(resort.gallery[1] ?? resort.hero, { width: 1000 })">
           <b data-count="365">365</b>
         </div>
         <div>

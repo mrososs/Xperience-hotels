@@ -8,12 +8,14 @@
 import { computed } from 'vue'
 import { MapPin, Play } from '@lucide/vue'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage } from '@/composables/useBgImage'
 import type { DiscoverVideo } from '@/data/types'
 
 const props = defineProps<{ video: DiscoverVideo }>()
 const emit = defineEmits<{ play: [] }>()
 
 const { locale, t } = useLocale()
+const { bg } = useBgImage()
 
 const title = computed(() =>
   locale.value === 'ar' && props.video.titleAr ? props.video.titleAr : props.video.title,
@@ -30,7 +32,7 @@ const thumbUrl = computed(() => `https://i.ytimg.com/vi/${props.video.youtubeId}
       :aria-label="t('discover.playVideo', { title })"
       @click="emit('play')"
     >
-      <span class="xpk-vcard__media" :style="{ backgroundImage: `url(${thumbUrl})` }" />
+      <span class="xpk-vcard__media" :style="bg(thumbUrl, { width: 480 })" />
       <span class="xpk-vcard__scrim" />
       <span class="xpk-vcard__tag"><MapPin /> {{ video.tag }}</span>
       <span class="xpk-vcard__play"><Play /></span>

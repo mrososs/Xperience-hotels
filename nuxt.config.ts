@@ -12,7 +12,9 @@ export default defineNuxtConfig({
   // Targeted SEO modules (sitemap + robots). Canonical URLs and hreflang
   // alternates come from @nuxtjs/i18n's useLocaleHead (wired in app.vue);
   // JSON-LD is hand-rolled in the resort page — no extra modules needed.
-  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap', '@nuxtjs/robots'],
+  // @nuxt/image optimizes the (remote, brand-CDN) photography — resized +
+  // AVIF/WebP — used through useBgImage() for the CSS background pattern.
+  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap', '@nuxtjs/robots', '@nuxt/image'],
 
   // Same order main.ts imported them: tokens/base first, page CSS after.
   css: [
@@ -79,6 +81,18 @@ export default defineNuxtConfig({
       import('./app/data/resorts').then((m) =>
         m.RESORTS.map((r) => ({ loc: `/resorts/${r.slug}`, _i18nTransform: true })),
       ),
+  },
+
+  // Image optimization. Photography is hotlinked from the brand WordPress
+  // CDN (and YouTube thumbs from i.ytimg.com), so both origins are
+  // whitelisted before the optimizer will touch them. Locally the default
+  // IPX provider resizes/transcodes; on Vercel the platform image optimizer
+  // is auto-selected. Backgrounds go through useBgImage()/$img (see that
+  // composable); the few real <img>/<NuxtImg> tags use the same pipeline.
+  image: {
+    domains: ['xperience-hotels.com', 'i.ytimg.com'],
+    quality: 70,
+    format: ['avif', 'webp'],
   },
 
   runtimeConfig: {

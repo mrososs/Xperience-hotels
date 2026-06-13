@@ -12,6 +12,7 @@
 // =====================================================================
 import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage, HERO_BG } from '@/composables/useBgImage'
 import { setupResortPage, type ResortPageHandle } from '@/composables/useResortPage'
 import SiteNavbar from '@/components/shared/SiteNavbar.vue'
 import SiteFooter from '@/components/shared/SiteFooter.vue'
@@ -30,7 +31,7 @@ import {
 
 const { locale, t, tBi } = useLocale()
 const localePath = useLocalePath()
-const bg = (url: string) => `background-image:url('${url}')`
+const { bg, src } = useBgImage()
 
 useSeoMeta({
   title: () => t('seo.contact.title'),
@@ -40,6 +41,11 @@ useSeoMeta({
   ogType: 'website',
   ogImage: CONTACT_HERO_IMG,
   twitterCard: 'summary_large_image',
+})
+
+// Preload the page hero (LCP) — same optimized URL the .h-hero__media uses.
+useHead({
+  link: [{ rel: 'preload', as: 'image', href: src(CONTACT_HERO_IMG, HERO_BG), fetchpriority: 'high' }],
 })
 
 let page: ResortPageHandle | null = null
@@ -63,7 +69,7 @@ const onBook = () => page?.open()
 
   <!-- ===================== HERO ===================== -->
   <section class="h-hero h-hero--page">
-    <div class="h-hero__media" :style="bg(CONTACT_HERO_IMG)"></div>
+    <div class="h-hero__media" :style="bg(CONTACT_HERO_IMG, HERO_BG)"></div>
     <div class="h-hero__scrim"></div>
     <div class="h-hero__inner x-wrap">
       <div class="c-crumb x-reveal">

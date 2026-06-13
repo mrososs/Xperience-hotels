@@ -10,6 +10,7 @@
 // =====================================================================
 import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage, HERO_BG } from '@/composables/useBgImage'
 import { setupResortPage, type ResortPageHandle } from '@/composables/useResortPage'
 import SiteNavbar from '@/components/shared/SiteNavbar.vue'
 import SiteFooter from '@/components/shared/SiteFooter.vue'
@@ -17,7 +18,7 @@ import { AWARD_HERO_IMG, AWARD_MARKS, AWARDS_BY_RESORT } from '@/data/content'
 
 const { locale, t, tBi } = useLocale()
 const localePath = useLocalePath()
-const bg = (url: string) => `background-image:url('${url}')`
+const { bg, src } = useBgImage()
 
 useSeoMeta({
   title: () => t('seo.awards.title'),
@@ -27,6 +28,11 @@ useSeoMeta({
   ogType: 'website',
   ogImage: AWARD_HERO_IMG,
   twitterCard: 'summary_large_image',
+})
+
+// Preload the page hero (LCP) — same optimized URL the .h-hero__media uses.
+useHead({
+  link: [{ rel: 'preload', as: 'image', href: src(AWARD_HERO_IMG, HERO_BG), fetchpriority: 'high' }],
 })
 
 let page: ResortPageHandle | null = null
@@ -50,7 +56,7 @@ const onBook = () => page?.open()
 
   <!-- ===================== PAGE HERO ===================== -->
   <section class="h-hero h-hero--page">
-    <div class="h-hero__media" :style="bg(AWARD_HERO_IMG)"></div>
+    <div class="h-hero__media" :style="bg(AWARD_HERO_IMG, HERO_BG)"></div>
     <div class="h-hero__scrim"></div>
     <div class="h-hero__inner x-wrap">
       <div class="x-eyebrow x-reveal" style="color:var(--xp-gold-soft)">{{ t('awards.eyebrow') }}</div>
@@ -70,7 +76,7 @@ const onBook = () => page?.open()
       <div class="x-eyebrow is-center x-reveal">{{ t('awards.certifiedBy') }}</div>
       <div class="aw-marks x-reveal" data-delay="1" style="margin-top:24px">
         <span v-for="mark in AWARD_MARKS" :key="mark.label" class="aw-mark">
-          <img :src="mark.img" :alt="mark.label" />
+          <img :src="src(mark.img, { width: 220 })" :alt="mark.label" loading="lazy" />
           <span>{{ mark.label }}</span>
         </span>
       </div>
@@ -94,7 +100,7 @@ const onBook = () => page?.open()
           class="aw-card x-reveal"
           :data-delay="(i % 3) || undefined"
         >
-          <span class="aw-card__badge"><img :src="award.img" :alt="award.source" /></span>
+          <span class="aw-card__badge"><img :src="src(award.img, { width: 220 })" :alt="award.source" loading="lazy" /></span>
           <div class="aw-card__body">
             <span class="aw-card__year">{{ award.source }}</span>
             <b>{{ award.title }}</b>

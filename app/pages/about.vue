@@ -15,6 +15,7 @@
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage, HERO_BG } from '@/composables/useBgImage'
 import { useEventListener } from '@/composables/useEventListener'
 import { setupResortPage, type ResortPageHandle } from '@/composables/useResortPage'
 import SiteNavbar from '@/components/shared/SiteNavbar.vue'
@@ -32,7 +33,7 @@ import {
 
 const { locale, t, tBi } = useLocale()
 const localePath = useLocalePath()
-const bg = (url: string) => `background-image:url('${url}')`
+const { bg, src } = useBgImage()
 
 useSeoMeta({
   title: () => t('seo.about.title'),
@@ -42,6 +43,12 @@ useSeoMeta({
   ogType: 'website',
   ogImage: ABOUT_HERO_IMG,
   twitterCard: 'summary_large_image',
+})
+
+// Preload the page hero (the LCP element) at high priority — same optimized
+// URL the .h-hero__media background requests.
+useHead({
+  link: [{ rel: 'preload', as: 'image', href: src(ABOUT_HERO_IMG, HERO_BG), fetchpriority: 'high' }],
 })
 
 let page: ResortPageHandle | null = null
@@ -94,7 +101,7 @@ const onBook = () => page?.open()
 
   <!-- ===================== PAGE HERO ===================== -->
   <section class="h-hero h-hero--page">
-    <div class="h-hero__media" :style="bg(ABOUT_HERO_IMG)"></div>
+    <div class="h-hero__media" :style="bg(ABOUT_HERO_IMG, HERO_BG)"></div>
     <div class="h-hero__scrim"></div>
     <div class="h-hero__inner x-wrap">
       <div class="ab-crumb x-reveal">
@@ -123,7 +130,7 @@ const onBook = () => page?.open()
           <span v-for="c in KIROSEIZ_COMPANIES" :key="c.label"><i :data-lucide="c.icon"></i> {{ c.label }}</span>
         </div>
       </div>
-      <div class="ab-who__media x-reveal" data-delay="1" :style="bg(ABOUT_WHO_IMG)">
+      <div class="ab-who__media x-reveal" data-delay="1" :style="bg(ABOUT_WHO_IMG, { width: 1000 })">
         <div class="ab-who__tag">
           <b>2011</b>
           <span>{{ t('aboutPage.tagFounded') }}<br />{{ t('aboutPage.tagMember') }}</span>

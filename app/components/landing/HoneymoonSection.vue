@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { Heart } from '@lucide/vue'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage } from '@/composables/useBgImage'
 import { HONEYMOON, HONEYMOON_IMG } from '@/data/content'
 
 defineEmits<{ book: [] }>()
 
 const { t, tBi } = useLocale()
+const { bg } = useBgImage()
 </script>
 
 <template>
   <section class="xpk-honey">
-    <div class="xpk-honey__media" v-reveal :style="{ backgroundImage: `url(${HONEYMOON_IMG})` }" />
+    <div class="xpk-honey__media" v-reveal :style="bg(HONEYMOON_IMG, { width: 1100 })" />
     <div class="xpk-honey__panel">
       <div class="xp-eyebrow" v-reveal>{{ t('honeymoon.eyebrow') }}</div>
       <h2 class="xpk-honey__title" v-reveal="1">{{ t('honeymoon.title') }}</h2>

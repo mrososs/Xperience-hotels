@@ -13,6 +13,7 @@
 // =====================================================================
 import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage, HERO_BG } from '@/composables/useBgImage'
 import { setupResortPage, type ResortPageHandle } from '@/composables/useResortPage'
 import SiteNavbar from '@/components/shared/SiteNavbar.vue'
 import SiteFooter from '@/components/shared/SiteFooter.vue'
@@ -33,7 +34,7 @@ import {
 
 const { locale, t, tBi } = useLocale()
 const localePath = useLocalePath()
-const bg = (url: string) => `background-image:url('${url}')`
+const { bg, src } = useBgImage()
 
 useSeoMeta({
   title: () => t('seo.meetings.title'),
@@ -43,6 +44,12 @@ useSeoMeta({
   ogType: 'website',
   ogImage: MEETINGS_HERO_IMG,
   twitterCard: 'summary_large_image',
+})
+
+// Preload the page hero (LCP) at high priority — same optimized URL the
+// .h-hero__media background requests.
+useHead({
+  link: [{ rel: 'preload', as: 'image', href: src(MEETINGS_HERO_IMG, HERO_BG), fetchpriority: 'high' }],
 })
 
 // The page belongs to Kiroseiz Parkland — breadcrumb + booking preset.
@@ -74,7 +81,7 @@ const goEnquire = () => document.getElementById('enquire')?.scrollIntoView({ beh
 
   <!-- ===================== HERO ===================== -->
   <section class="h-hero h-hero--page">
-    <div class="h-hero__media" :style="bg(MEETINGS_HERO_IMG)"></div>
+    <div class="h-hero__media" :style="bg(MEETINGS_HERO_IMG, HERO_BG)"></div>
     <div class="h-hero__scrim"></div>
     <div class="h-hero__inner x-wrap">
       <div class="m-crumb x-reveal">
@@ -135,7 +142,7 @@ const goEnquire = () => document.getElementById('enquire')?.scrollIntoView({ beh
         <h2 class="x-section__title x-h2">{{ t('meetingsPage.ballroomTitle') }}</h2>
       </div>
       <div class="m-ball x-reveal">
-        <div class="m-ball__media" :style="bg(BALLROOM_IMG)">
+        <div class="m-ball__media" :style="bg(BALLROOM_IMG, { width: 1200 })">
           <span class="m-ball__tag"><i data-lucide="presentation"></i> {{ t('meetingsPage.ballroomTag') }}</span>
         </div>
         <div class="m-ball__panel">
@@ -173,7 +180,7 @@ const goEnquire = () => document.getElementById('enquire')?.scrollIntoView({ beh
         class="h-dine x-reveal"
         :data-delay="i || undefined"
       >
-        <div class="h-dine__media" :style="bg(ev.img)"></div>
+        <div class="h-dine__media" :style="bg(ev.img, { width: 760 })"></div>
         <div class="h-dine__scrim"></div>
         <div class="h-dine__body">
           <span class="h-dine__tag">{{ tBi(ev.tag) }}</span>
@@ -219,7 +226,7 @@ const goEnquire = () => document.getElementById('enquire')?.scrollIntoView({ beh
   <section class="x-band--sea" id="weddings">
     <div class="x-section x-wrap">
       <div class="h-acts">
-        <div class="h-acts__media x-reveal" :style="bg(WEDDINGS_IMG)">
+        <div class="h-acts__media x-reveal" :style="bg(WEDDINGS_IMG, { width: 1000 })">
           <b>{{ t('meetingsPage.weddingsYes') }}</b>
         </div>
         <div>

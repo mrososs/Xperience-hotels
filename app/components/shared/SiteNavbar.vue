@@ -11,6 +11,7 @@
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useRoute, useLocalePath } from '#imports'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage } from '@/composables/useBgImage'
 import { useScrollSpy } from '@/composables/useScrollSpy'
 import { useScrollState } from '@/composables/useScrollState'
 import { useEventListener } from '@/composables/useEventListener'
@@ -104,7 +105,9 @@ const onBook = () => {
 }
 const closeSheet = () => (sheetOpen.value = false)
 
-const bg = (url: string) => `background-image:url('${url}')`
+// Mega-menu thumbnails render at 84×64 — request a small, retina-friendly
+// width so they're served as tiny WebP instead of full-size banner JPEGs.
+const { bg } = useBgImage()
 
 onMounted(ensureIcons)
 // Lucide swaps `<i data-lucide>` for <svg>; a locale re-render can restore
@@ -185,7 +188,7 @@ watch(locale, () => nextTick(drawIcons))
         :to="localePath(`/resorts/${r.slug}`)"
         @click="megaOpen = false"
       >
-        <span class="x-mega__thumb" :style="bg(r.img)"></span>
+        <span class="x-mega__thumb" :style="bg(r.img, { width: 200 })"></span>
         <span class="x-mega__meta">
           <b>{{ tBi(r.name) }}</b>
           <span><i data-lucide="map-pin"></i> {{ tBi(r.area) }}</span>

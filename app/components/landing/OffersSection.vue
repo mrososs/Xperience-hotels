@@ -13,11 +13,13 @@
 import { ArrowRight, Check, Heart, MapPin } from '@lucide/vue'
 import { useLocalePath } from '#imports'
 import { useLocale } from '@/composables/useLocale'
+import { useBgImage } from '@/composables/useBgImage'
 import { HONEYMOON_PACKAGES } from '@/data/offers'
 
 defineEmits<{ book: [] }>()
 
 const { t, tBi } = useLocale()
+const { bg } = useBgImage()
 const localePath = useLocalePath()
 </script>
 
@@ -41,7 +43,7 @@ const localePath = useLocalePath()
         class="xpk-offer"
         v-reveal="i % 2"
       >
-        <div class="xpk-offer__media" :style="{ backgroundImage: `url(${pkg.img})` }">
+        <div class="xpk-offer__media" :style="bg(pkg.img, { width: 760 })">
           <span class="xpk-offer__tag"><Heart /> {{ t('offers.cardTag') }}</span>
         </div>
         <div class="xpk-offer__body">

@@ -13,6 +13,7 @@ Built with **Nuxt 4 + TypeScript** — fully **server-side rendered for SEO**, b
 - [@nuxtjs/i18n](https://i18n.nuxtjs.org/) — bilingual EN/AR, locale-prefixed routes, RTL support
 - [@nuxtjs/sitemap](https://nuxtseo.com/sitemap) + [@nuxtjs/robots](https://nuxtseo.com/robots) — sitemap.xml / robots.txt
 - [Sass](https://sass-lang.com/) — token-driven design system
+- [@nuxt/image](https://image.nuxt.com/) — image optimization (resize + WebP/AVIF), used via the `useBgImage()` helper for the CSS-background pattern
 - [@blossom-carousel/vue](https://www.npmjs.com/package/@blossom-carousel/vue) — gallery carousels
 - [@lucide/vue](https://lucide.dev/) — icon set
 
@@ -109,4 +110,4 @@ Set `NUXT_PUBLIC_SITE_URL` (canonical/sitemap base) — and later `NUXT_STORYBLO
 - **UI strings** live in JSON catalogs (`i18n/locales/en.json`, `ar.json`) and are accessed with `t()`; per-page SEO meta lives under the `seo.*` keys.
 - Adding a resort: append a seed to `SEEDS` in `app/data/resorts.ts` — routing, nav links, rooms, dining, the detail page and the sitemap are derived automatically.
 
-> **Note:** Photography is currently hotlinked from the brand CDN per the design-system note. For production, localize images (and consider `@nuxt/image` for optimization).
+> **Note:** Photography is hotlinked from the brand CDN and optimized at request time by **`@nuxt/image`** — resized per render-context and served as WebP (AVIF auto-negotiated on Vercel). Background images go through the `useBgImage()` helper (`app/composables/useBgImage.ts`); the brand CDN and `i.ytimg.com` are whitelisted in `nuxt.config.ts` → `image.domains`. The LCP hero is preloaded at `fetchpriority=high` and the offscreen hero-carousel slides are deferred off the critical path.
