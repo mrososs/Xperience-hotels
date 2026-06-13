@@ -8,18 +8,21 @@
 // booking bar + modal, gallery lightbox, anchor scrollspy) is wired by
 // setupResortPage after mount.
 // =====================================================================
-import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
+import { useLocalePath } from '#imports'
 import { useLocale } from '@/composables/useLocale'
 import { useBgImage, HERO_BG } from '@/composables/useBgImage'
 import { setupResortPage, type ResortPageHandle } from '@/composables/useResortPage'
 import SiteNavbar from '@/components/shared/SiteNavbar.vue'
 import SiteFooter from '@/components/shared/SiteFooter.vue'
+import ResortMap from '@/components/resort/ResortMap.vue'
 import type { Resort } from '@/data/resorts'
 
 const props = defineProps<{ resort: Resort }>()
 
 const { locale, t, tBi } = useLocale()
 const { bg } = useBgImage()
+const localePath = useLocalePath()
 
 let page: ResortPageHandle | null = null
 
@@ -37,6 +40,15 @@ onBeforeUnmount(() => {
 })
 
 const onBook = () => page?.open(props.resort.fullName)
+
+// Google Maps deep links built from the resort's exact coordinates.
+const mapsDir = computed(
+  () => `https://www.google.com/maps/dir/?api=1&destination=${props.resort.coords.lat},${props.resort.coords.lng}`,
+)
+const mapsView = computed(
+  () => `https://www.google.com/maps/search/?api=1&query=${props.resort.coords.lat},${props.resort.coords.lng}`,
+)
+const telHref = computed(() => `tel:${props.resort.phone.replace(/\s+/g, '')}`)
 </script>
 
 <template>
@@ -72,8 +84,12 @@ const onBook = () => page?.open(props.resort.fullName)
       <a href="#gallery">{{ t('resort.anchorGallery') }}</a>
       <a href="#rooms">{{ t('resort.anchorRooms') }}</a>
       <a href="#dining">{{ t('resort.anchorDining') }}</a>
+      <a href="#spa">{{ t('resort.anchorSpa') }}</a>
       <a href="#activities">{{ t('resort.anchorActivities') }}</a>
       <a href="#facilities">{{ t('resort.anchorFacilities') }}</a>
+      <a href="#meetings">{{ t('resort.anchorMeetings') }}</a>
+      <a href="#weddings">{{ t('resort.anchorWeddings') }}</a>
+      <a href="#offers">{{ t('resort.anchorOffers') }}</a>
       <a href="#location">{{ t('resort.anchorLocation') }}</a>
       <a href="#reviews">{{ t('resort.anchorReviews') }}</a>
       <button class="x-btn x-btn--gold x-btn--sm h-anchors__go" :data-book-open="resort.fullName">{{ t('common.book') }}</button>
@@ -178,6 +194,28 @@ const onBook = () => page?.open(props.resort.fullName)
     </div>
   </section>
 
+  <!-- ===================== SPA ===================== -->
+  <section class="x-section x-wrap" id="spa">
+    <div class="x-section__head x-reveal">
+      <div class="x-eyebrow">{{ t('resort.spaEyebrow') }}</div>
+      <h2 class="x-section__title x-h2">{{ t('resort.spaTitle') }}</h2>
+      <p class="x-section__lead x-lead">{{ t('resort.spaLead') }}</p>
+    </div>
+    <div class="h-spa">
+      <div class="h-spa__media x-reveal" :style="bg(resort.spa.img, { width: 900 })"></div>
+      <div class="h-spa__list">
+        <div v-for="(tr, i) in resort.spa.treatments" :key="i" class="h-spaitem x-reveal" :data-delay="i || undefined">
+          <i :data-lucide="tr.icon"></i>
+          <div class="h-spaitem__body">
+            <b>{{ tBi(tr.name) }}</b>
+            <span>{{ tBi(tr.desc) }}</span>
+          </div>
+          <span class="h-spaitem__dur">{{ tBi(tr.duration) }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== ACTIVITIES (dark) ===================== -->
   <section class="x-band--sea" id="activities">
     <div class="x-section x-wrap">
@@ -216,6 +254,85 @@ const onBook = () => page?.open(props.resort.fullName)
     </div>
   </section>
 
+  <!-- ===================== MEETINGS & EVENTS (teaser) ===================== -->
+  <section class="x-band" id="meetings">
+    <div class="x-section x-wrap">
+      <div class="x-section__head x-reveal">
+        <div class="x-eyebrow">{{ t('resort.meetingsEyebrow') }}</div>
+        <h2 class="x-section__title x-h2">{{ t('resort.meetingsTitle') }}</h2>
+      </div>
+      <div class="m-ball x-reveal">
+        <div class="m-ball__media" :style="bg(resort.meetings.img, { width: 1200 })">
+          <span class="m-ball__tag"><i data-lucide="presentation"></i> {{ t('resort.meetingsTag') }}</span>
+        </div>
+        <div class="m-ball__panel">
+          <p class="x-body" style="margin:0 0 26px;color:var(--xp-slate);line-height:1.7">{{ t('resort.meetingsLead') }}</p>
+          <div class="m-specs">
+            <div v-for="s in resort.meetings.specs" :key="s.icon" class="m-spec">
+              <i :data-lucide="s.icon"></i>
+              <div>
+                <b>{{ tBi(s.value) }}</b>
+                <span>{{ tBi(s.label) }}</span>
+              </div>
+            </div>
+          </div>
+          <NuxtLink class="x-btn x-btn--gold" style="align-self:flex-start" :to="localePath('/meetings-events')">
+            {{ t('resort.meetingsCta') }} <i data-lucide="arrow-right"></i>
+          </NuxtLink>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WEDDINGS (dark) ===================== -->
+  <section class="x-band--sea" id="weddings">
+    <div class="x-section x-wrap">
+      <div class="h-acts">
+        <div class="h-acts__media x-reveal" :style="bg(resort.weddings.img, { width: 1000 })"></div>
+        <div>
+          <div class="x-eyebrow x-reveal" style="color:var(--xp-gold-soft)">{{ t('resort.weddingsEyebrow') }}</div>
+          <h2 class="x-h2 x-reveal" data-delay="1" style="color:#fff;margin:16px 0 0">{{ t('resort.weddingsTitle') }}</h2>
+          <p class="x-reveal" data-delay="2" style="color:rgba(237,231,220,.82);font-size:18px;line-height:1.65;margin:20px 0 0">{{ t('resort.weddingsLead') }}</p>
+          <div class="h-actlist">
+            <div v-for="(w, i) in resort.weddings.highlights" :key="i" class="h-act x-reveal" :data-delay="i + 1">
+              <i :data-lucide="w.icon"></i>
+              <div>
+                <b>{{ tBi(w.title) }}</b>
+                <span>{{ tBi(w.sub) }}</span>
+              </div>
+            </div>
+          </div>
+          <NuxtLink class="x-btn x-btn--gold" style="margin-top:30px" :to="`${localePath('/meetings-events')}#weddings`">
+            {{ t('resort.weddingsCta') }} <i data-lucide="arrow-right"></i>
+          </NuxtLink>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OFFERS (teaser) ===================== -->
+  <section class="x-section x-wrap" id="offers">
+    <div class="x-section__head x-reveal">
+      <div class="x-eyebrow">{{ t('resort.offersEyebrow') }}</div>
+      <h2 class="x-section__title x-h2">{{ t('resort.offersTitle') }}</h2>
+      <p class="x-section__lead x-lead">{{ t('resort.offersLead') }}</p>
+    </div>
+    <div class="m-ball x-reveal">
+      <div class="m-ball__media" :style="bg(resort.offer.img, { width: 1200 })">
+        <span class="m-ball__tag"><i data-lucide="crown"></i> {{ t('resort.offersTag') }}</span>
+      </div>
+      <div class="m-ball__panel">
+        <ul class="of-list" style="margin:0 0 28px">
+          <li v-for="(b, i) in resort.offer.benefits" :key="i"><i :data-lucide="b.icon"></i> {{ tBi(b.label) }}</li>
+        </ul>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="x-btn x-btn--gold" :data-book-open="resort.fullName">{{ t('resort.offersBookDirect') }} <i data-lucide="arrow-right"></i></button>
+          <NuxtLink class="x-btn x-btn--ghost" :to="localePath('/offers')">{{ t('resort.offersCta') }}</NuxtLink>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== LOCATION ===================== -->
   <section class="x-band" id="location">
     <div class="x-section x-wrap">
@@ -224,23 +341,44 @@ const onBook = () => page?.open(props.resort.fullName)
         <h2 class="x-section__title x-h2">{{ t('resort.locationTitle', { area: tBi(resort.area) }) }}</h2>
       </div>
       <div class="h-loc x-reveal">
-        <div class="h-map">
-          <div class="h-map__grid"></div>
-          <div class="h-map__road h-map__r1"></div>
-          <div class="h-map__road h-map__r2"></div>
-          <div class="h-map__road h-map__r3"></div>
-          <div class="h-map__sea"></div>
-          <div class="h-map__pin"><i data-lucide="map-pin"></i><b>{{ resort.mapPinLabel }}</b></div>
+        <div class="h-loc__map">
+          <ClientOnly>
+            <ResortMap
+              :lat="resort.coords.lat"
+              :lng="resort.coords.lng"
+              :label="resort.mapPinLabel"
+              :area="tBi(resort.area)"
+            />
+            <template #fallback>
+              <div class="h-loc__skeleton" :style="bg(resort.hero, { width: 900 })">
+                <span class="h-loc__skeleton-pin"><i data-lucide="map-pin"></i></span>
+              </div>
+            </template>
+          </ClientOnly>
         </div>
         <div class="h-loc__panel">
           <div class="x-eyebrow">{{ t('resort.findUs') }}</div>
-          <h3 class="x-h3" style="margin:10px 0 0">{{ tBi(resort.area) }}</h3>
-          <div class="h-locrows">
-            <div class="h-locrow"><i data-lucide="map-pin"></i><div><b>{{ t('resort.address') }}</b><span>{{ resort.address }}</span></div></div>
-            <div class="h-locrow"><i data-lucide="plane"></i><div><b>{{ t('resort.fromAirport') }}</b><span>{{ t('resort.fromAirportVal') }}</span></div></div>
-            <div class="h-locrow"><i data-lucide="phone"></i><div><b>{{ t('resort.reservations') }}</b><span>{{ resort.phone }}</span></div></div>
+          <h3 class="x-h3" style="margin:10px 0 6px">{{ tBi(resort.area) }}</h3>
+          <p class="h-loc__addr"><i data-lucide="map-pin"></i> {{ resort.address }}</p>
+          <div class="h-dir">
+            <a class="h-dircard h-dircard--cta" :href="mapsDir" target="_blank" rel="noopener">
+              <span class="h-dircard__ic"><i data-lucide="navigation"></i></span>
+              <span class="h-dircard__tx"><b>{{ t('common.getDirections') }}</b><small>{{ t('resort.getDirectionsSub') }}</small></span>
+            </a>
+            <div class="h-dircard">
+              <span class="h-dircard__ic"><i data-lucide="plane"></i></span>
+              <span class="h-dircard__tx"><b>{{ t('resort.fromAirport') }}</b><small>{{ t('resort.fromAirportVal') }}</small></span>
+            </div>
+            <a class="h-dircard" :href="telHref">
+              <span class="h-dircard__ic"><i data-lucide="phone"></i></span>
+              <span class="h-dircard__tx"><b>{{ t('resort.reservations') }}</b><small>{{ resort.phone }}</small></span>
+            </a>
+            <a class="h-dircard" :href="mapsView" target="_blank" rel="noopener">
+              <span class="h-dircard__ic"><i data-lucide="map"></i></span>
+              <span class="h-dircard__tx"><b>{{ t('resort.viewLargerMap') }}</b><small>Google Maps</small></span>
+            </a>
           </div>
-          <a class="x-btn x-btn--ghost" :href="`https://www.google.com/maps/search/${encodeURIComponent(resort.area.en + ' Sharm El Sheikh')}`" target="_blank" rel="noopener"><i data-lucide="navigation"></i> {{ t('common.getDirections') }}</a>
+          <a class="x-btn x-btn--gold h-loc__cta" :href="mapsDir" target="_blank" rel="noopener"><i data-lucide="navigation"></i> {{ t('common.getDirections') }}</a>
         </div>
       </div>
     </div>
